@@ -1,0 +1,22 @@
+[2026-05-23 15:48:11] [REGISTRO] user=7 Nuevo usuario: noreplyartcania@gmail.com
+[2026-05-24 00:21:21] [INFO] Mailer: correo enviado a jeimygo666@gmail.com — ✅ Test Artcania OAuth Mail
+[2026-05-23 16:42:01] [INFO] Mailer: correo enviado a noreplyartcania@gmail.com — Verifica tu cuenta en Artcania
+[2026-05-23 16:42:01] [REENVIO_VERIFICACION] user=7 noreplyartcania@gmail.com
+[2026-05-23 17:09:16] [INFO] Mailer: correo enviado a noreplyartcania@gmail.com — Verifica tu cuenta en Artcania
+[2026-05-23 17:09:16] [REENVIO_VERIFICACION] user=7 noreplyartcania@gmail.com
+[2026-05-23 19:38:06] [INFO] Mailer: correo enviado a noreplyartcania@gmail.com — Verifica tu cuenta en Artcania
+[2026-05-23 19:38:06] [REENVIO_VERIFICACION] user=7 noreplyartcania@gmail.com
+[2026-05-23 19:38:27] [LOGIN] user=7 Login desde IP: ::1
+[2026-05-23 20:11:51] [LOGOUT] user=7 Cierre de sesión
+[2026-05-23 20:13:11] [INFO] Mailer: correo enviado a jeimygo666@gmail.com — Verifica tu cuenta en Artcania
+[2026-05-23 20:13:11] [REGISTRO] user=8 Nuevo usuario: jeimygo666@gmail.com
+[2026-05-23 20:13:48] [LOGIN] user=8 Login desde IP: ::1
+[2026-05-23 22:13:48] [LOGOUT] user=8 Cierre de sesión
+[2026-05-23 22:15:07] [LOGIN] user=9 Login desde IP: ::1
+[2026-05-23 22:53:47] [LOGOUT] user=9 Cierre de sesión
+[2026-05-23 22:56:05] [INFO] Mailer: correo enviado a alissawa01@gmail.com — Verifica tu cuenta en Artcania
+[2026-05-23 22:56:05] [REGISTRO] user=10 Nuevo usuario: alissawa01@gmail.com
+[2026-05-23 22:58:29] [INFO] Mailer: correo enviado a alissawa03@gmail.com — Verifica tu cuenta en Artcania
+[2026-05-23 22:58:29] [REGISTRO] user=11 Nuevo usuario: alissawa03@gmail.com
+[2026-05-23 23:00:34] [LOGIN] user=11 Login desde IP: ::1
+[2026-05-23 23:01:21] [OBRA_CREADA] user=11 Obra ID 11

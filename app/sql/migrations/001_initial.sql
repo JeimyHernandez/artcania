@@ -1,0 +1,11 @@
+-- ============================================================
+-- Artcania – Migración 001: Estado inicial
+-- Este archivo documenta la migración base.
+-- El script completo está en: app/sql/artcania_database.sql
+-- ============================================================
+-- Para futuras migraciones, crear 002_nombre.sql, etc.
+-- Ejecutar en orden numérico.
+
+-- Ejemplo de migración futura:
+-- ALTER TABLE obras ADD COLUMN idioma VARCHAR(5) DEFAULT 'es' AFTER descripcion;
+-- INSERT INTO bitacora(accion,detalle,ip) VALUES('MIGRACION','001_initial aplicada','sistema');

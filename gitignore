@@ -1,0 +1,16 @@
+# Credenciales — nunca a Git
+config/credentials.php
+config/database.php
+
+# Logs
+logs/
+
+# Scripts temporales peligrosos
+crear_admin.php
+debug.php
+oauth_mail_setup.php
+
+# Sistema
+.DS_Store
+Thumbs.db
+*.log

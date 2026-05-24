@@ -1,0 +1,4 @@
+/* Curator panel */
+.sidebar .nav-link { border-radius: 8px; font-size: .88rem; transition: all .2s; }
+.sidebar .nav-link:hover { background: rgba(255,255,255,.1); }
+.card { border-radius: 12px; border: none; }
