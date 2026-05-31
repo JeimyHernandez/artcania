@@ -87,6 +87,17 @@ body > *,
   pointer-events: none;
   z-index: 1;
 }
+/* Fondo de login/registro con la luna */
+body.artcania-auth-bg {
+  background: url("../img/luna.png") no-repeat center center fixed;
+  background-size: cover;
+  background-color: #06030f; /* respaldo */
+}
+
+body.artcania-auth-bg::before,
+body.artcania-auth-bg::after {
+  display: none;
+}
 
 /* ── Tipografía ──────────────────────────────────────────────── */
 h1, h2, h3, h4, h5, h6,
@@ -644,30 +655,48 @@ footer, .artcania-footer {
   .main-content  { padding: 1rem; }
 }
 
-/* ============ Artcadia logo image ============ */
-.auth-logo-img{
-  display:block;
-  width:180px;height:180px;
-  margin:0 auto .6rem;
-  object-fit:contain;
-  filter:drop-shadow(0 0 22px rgba(199,125,255,.55)) drop-shadow(0 0 40px rgba(140,90,255,.35));
-  animation:floatLogo 6s ease-in-out infinite;
+/* ============ Artcania logo image ============ */
+.auth-logo-img {
+  display: block;
+  width: 400px;       /* tamaño para el logo */
+  height: auto;       /* mantiene proporción, no estira el cuadro */
+  margin: 0 auto .6rem;
+  object-fit: contain;
+  filter: drop-shadow(0 0 22px rgba(199,125,255,.55)) 
+          drop-shadow(0 0 40px rgba(140,90,255,.35));
+  /* animation: floatLogo 6s ease-in-out infinite;  <-- quitamos la animación de flotar de login/registro */
 }
-@keyframes floatLogo{
-  0%,100%{transform:translateY(0) rotate(-.5deg)}
-  50%{transform:translateY(-10px) rotate(.5deg)}
+
+/* Eliminar o comentar la animación flotante del logo de login/registro
+@keyframes floatLogo {
+    
+}*/
+
+.brand-logo-img {
+  width: 38px;
+  height: 38px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 10px rgba(199,125,255,.6));
 }
-.brand-logo-img{
-  width:38px;height:38px;object-fit:contain;
-  filter:drop-shadow(0 0 10px rgba(199,125,255,.6));
+
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: .55rem;
+  text-decoration: none;
 }
-.sidebar-brand{display:flex;align-items:center;gap:.55rem;text-decoration:none}
-.sidebar-brand span,.navbar-brand span{
-  font-family:'Cinzel',serif;letter-spacing:.32em;font-weight:600;
-  background:linear-gradient(180deg,#f4ecff,#c9a8ff 70%,#8e6bff);
-  -webkit-background-clip:text;background-clip:text;color:transparent;
-  text-shadow:0 0 18px rgba(199,125,255,.25);
-  font-size:1.05rem;
+
+.sidebar-brand span,
+.navbar-brand span {
+  font-family: 'Cinzel', serif;
+  letter-spacing: .32em;
+  font-weight: 600;
+  background: linear-gradient(180deg,#f4ecff,#c9a8ff 70%,#8e6bff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 0 18px rgba(199,125,255,.25);
+  font-size: 1.05rem;
 }
 
 /* ═══════════════════════════════════════════════════════════════
