@@ -1,64 +1,57 @@
 <?php $pageTitle = 'Inicio'; ?>
 
-<!-- ── HERO ──────────────────────────────────────────────────────────── -->
-<section class="hero-magic">
-  <div class="container hero-content">
-    <div class="row align-items-center g-5">
-      <div class="col-lg-6 fade-up">
-        <p class="mb-2" style="color:var(--teal);font-size:.82rem;letter-spacing:.12em;text-transform:uppercase;font-weight:600">
-          ✦ &nbsp;Plataforma de Arte Digital
-        </p>
+<!-- HERO -->
+<section class="hero-magic hero-centered">
+  <div class="container-xl">
+    <div class="row justify-content-center">
+      <div class="col-lg-9 col-xl-8 text-center">
+        <div class="divider-magic mb-3 mx-auto" style="max-width:200px">✦</div>
         <h1 class="hero-title mb-3">
-          Un mundo donde el arte<br>no tiene límites
+          El <em>universo</em><br>donde el arte<br>no tiene <em>límites</em>
         </h1>
-        <p class="hero-subtitle mb-4">
-          Descubre obras únicas, conecta con artistas extraordinarios y sé parte de una comunidad mágica donde la creatividad no tiene fronteras.
+        <p class="hero-sub mb-4 mx-auto">
+          Explora, conecta e inspírate con una comunidad apasionada por la creatividad y la imaginación.
         </p>
-        <div class="d-flex flex-wrap gap-3">
-          <a href="<?= url('galeria') ?>" class="btn-magic btn">
-            <i class="fa fa-compass me-2"></i>Explorar Galería
-          </a>
-          <?php if (!Auth::check()): ?>
-          <a href="<?= url('registro') ?>" class="btn-magic-outline btn">
-            <i class="fa fa-magic me-2"></i>Únete gratis
-          </a>
-          <?php endif; ?>
-        </div>
-      </div>
-      <div class="col-lg-6 d-none d-lg-block">
-        <div style="position:relative">
-          <!-- Orbe decorativo -->
-          <div style="width:380px;height:380px;border-radius:50%;
-                      background:radial-gradient(ellipse at 40% 40%, rgba(92,77,155,.35), rgba(93,214,192,.12), transparent 70%);
-                      border:1px solid rgba(166,189,255,.12);
-                      display:flex;align-items:center;justify-content:center;
-                      margin:0 auto;
-                      box-shadow:0 0 80px rgba(92,77,155,.2), inset 0 0 60px rgba(93,214,192,.05);
-                      animation:pulse-glow 4s ease-in-out infinite">
-            <div style="font-size:7rem;filter:drop-shadow(0 0 30px rgba(166,189,255,.4))">🎨</div>
-          </div>
-          <!-- Badges flotantes -->
-          <div style="position:absolute;top:20px;left:0;background:rgba(20,27,45,.9);
-                      border:1px solid rgba(166,189,255,.15);border-radius:12px;padding:.6rem .9rem;
-                      font-size:.78rem;color:var(--pearl)">
-            <i class="fa fa-palette me-1" style="color:var(--teal)"></i>
-            Arte Digital
-          </div>
-          <div style="position:absolute;bottom:40px;right:0;background:rgba(20,27,45,.9);
-                      border:1px solid rgba(93,214,192,.2);border-radius:12px;padding:.6rem .9rem;
-                      font-size:.78rem;color:var(--pearl)">
-            <i class="fa fa-star me-1" style="color:#f0c040"></i>
-            Fan Arts
-          </div>
-        </div>
+        <a href="<?= url('galeria') ?>" class="btn btn-magic px-4 py-2" style="font-size:.95rem">
+          <i class="fa fa-compass me-2"></i>Explorar
+        </a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── STATS ──────────────────────────────────────────────────────────── -->
-<div class="stats-banner">
-  <div class="container">
+<!-- Categorías -->
+<section class="py-5">
+  <div class="container-xl">
+    <div class="text-center mb-4">
+      <h2 class="fs-4" style="letter-spacing:.08em">Descubre el universo creativo</h2>
+    </div>
+    <div class="row g-3 justify-content-center">
+      <?php
+      $cats = [
+        ['icon'=>'🎨','name'=>'Arte Digital', 'url'=>url('galeria?categoria=1')],
+        ['icon'=>'🖼️','name'=>'Pintura',      'url'=>url('galeria?categoria=2')],
+        ['icon'=>'📸','name'=>'Fotografía',   'url'=>url('galeria?categoria=4')],
+        ['icon'=>'✏️','name'=>'Ilustración',  'url'=>url('galeria?categoria=5')],
+        ['icon'=>'🌀','name'=>'Arte Abstracto','url'=>url('galeria?categoria=6')],
+        ['icon'=>'🎭','name'=>'Técnica Mixta','url'=>url('galeria?categoria=9')],
+      ];
+      foreach($cats as $c): ?>
+      <div class="col-6 col-sm-4 col-md-2">
+        <a href="<?= $c['url'] ?>" class="category-card text-decoration-none">
+          <span class="cat-icon"><?= $c['icon'] ?></span>
+          <div class="cat-name"><?= $c['name'] ?></div>
+          <div class="cat-line"></div>
+        </a>
+      </div>
+      <?php endforeach; ?>
+    </div>
+  </div>
+</section>
+
+<!-- Stats -->
+<div class="container-xl">
+  <div class="stats-banner">
     <div class="row text-center g-3">
       <div class="col-6 col-md-3 stat-item">
         <h3><?= number_format($stat_obras ?? 0) ?>+</h3>
@@ -80,66 +73,99 @@
   </div>
 </div>
 
-<!-- ── CATEGORÍAS ─────────────────────────────────────────────────────── -->
-<section class="section-magic">
-  <div class="container">
-    <h2 class="section-title mb-1">Explorar Categorías</h2>
-    <p class="mb-4 small" style="color:rgba(244,247,251,.4)">Encuentra el arte que conecta contigo</p>
+<!-- Obras recientes -->
+<section class="py-5">
+  <div class="container-xl">
+    <div class="d-flex align-items-center justify-content-between mb-4">
+      <h2 class="fs-5 mb-0">✦ Obras Recientes</h2>
+      <a href="<?= url('galeria') ?>" class="btn btn-outline-magic btn-sm">Ver galería →</a>
+    </div>
+    <?php if(!empty($obras)): ?>
+    <div class="gallery-grid">
+      <?php foreach($obras as $o): ?>
+      <div class="gallery-item" onclick="location.href='<?= url('galeria/'.$o['id']) ?>'">
+        <?php if(!empty($o['imagen_principal'])): ?>
+          <img src="<?= media_url('Originales/imagen/Obras_digitales/'.$o['imagen_principal']) ?>"
+               alt="<?= e($o['titulo']) ?>" loading="lazy"
+               onerror="this.src='<?= url('resources/img/placeholder.png') ?>'">
+        <?php else: ?>
+          <div style="height:200px;background:var(--purple-soft);display:flex;align-items:center;justify-content:center;font-size:2rem">🎨</div>
+        <?php endif; ?>
+        <button class="gallery-fav-btn fav-btn <?= Auth::check()?'':'d-none' ?>"
+                data-id="<?= $o['id'] ?>" title="Favorito">
+          <i class="fa fa-heart"></i>
+        </button>
+        <div class="gallery-item-overlay">
+          <div class="obra-title"><?= e(truncate($o['titulo'], 35)) ?></div>
+          <div class="obra-artist">✦ <?= e($o['artista_nombre'] ?? '') ?></div>
+        </div>
+      </div>
+      <?php endforeach; ?>
+    </div>
+    <?php else: ?>
+    <div class="text-center py-5" style="color:var(--pearl-muted)">
+      <i class="fa fa-image fa-3x mb-3" style="opacity:.3"></i>
+      <p>Aún no hay obras publicadas</p>
+    </div>
+    <?php endif; ?>
+  </div>
+</section>
+
+<!-- Artistas destacados -->
+<?php if(!empty($artistas)): ?>
+<section class="py-4" style="background:rgba(124,58,237,.04);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+  <div class="container-xl">
+    <div class="d-flex align-items-center justify-content-between mb-4">
+      <h2 class="fs-5 mb-0">✦ Artistas Destacados</h2>
+      <a href="<?= url('artistas') ?>" class="btn btn-outline-magic btn-sm">Ver todos →</a>
+    </div>
     <div class="row g-3">
-      <?php
-      $cats = array(
-        array('icon'=>'✏️','nombre'=>'Ilustración',  'url'=>'galeria?categoria=ilustracion'),
-        array('icon'=>'🎬','nombre'=>'Animación',     'url'=>'videos'),
-        array('icon'=>'💜','nombre'=>'Fan Arts',       'url'=>'fanarts'),
-        array('icon'=>'▶️','nombre'=>'Videos',        'url'=>'videos'),
-        array('icon'=>'📖','nombre'=>'Historias',      'url'=>'galeria?categoria=historia'),
-        array('icon'=>'🏆','nombre'=>'Subastas',       'url'=>'subastas'),
-      );
-      foreach($cats as $c): ?>
-      <div class="col-6 col-md-4 col-lg-2">
-        <a href="<?= url($c['url']) ?>" class="cat-card">
-          <span class="cat-icon"><?= $c['icon'] ?></span>
-          <span><?= $c['nombre'] ?></span>
+      <?php foreach($artistas as $a): ?>
+      <div class="col-6 col-md-3">
+        <a href="<?= url('artistas/'.$a['usuario_id']) ?>" class="card-magic d-block text-decoration-none text-center p-3">
+          <img src="<?= avatar($a['avatar'] ?? '') ?>"
+               class="rounded-circle mb-2 border"
+               style="width:64px;height:64px;object-fit:cover;border-color:var(--purple-mid)!important"
+               alt="<?= e($a['nombre']) ?>">
+          <div style="font-size:.9rem;font-weight:600;color:var(--pearl)"><?= e($a['nombre']) ?></div>
+          <div style="font-size:.75rem;color:var(--pearl-muted)"><?= e($a['especialidad'] ?? '') ?></div>
         </a>
       </div>
       <?php endforeach; ?>
     </div>
   </div>
 </section>
+<?php endif; ?>
 
-<!-- ── OBRAS DESTACADAS ───────────────────────────────────────────────── -->
-<?php if (!empty($obras)): ?>
-<section class="section-magic" style="padding-top:0">
-  <div class="container">
-    <div class="d-flex justify-content-between align-items-end mb-4">
-      <div>
-        <h2 class="section-title mb-1">Obras Destacadas</h2>
-        <p class="small mb-0" style="color:rgba(244,247,251,.4)">Las creaciones más recientes</p>
-      </div>
-      <a href="<?= url('galeria') ?>" class="btn-magic-outline btn btn-sm">
-        Ver todas <i class="fa fa-arrow-right ms-1"></i>
-      </a>
+<!-- Subastas activas -->
+<?php if(!empty($subastas)): ?>
+<section class="py-5">
+  <div class="container-xl">
+    <div class="d-flex align-items-center justify-content-between mb-4">
+      <h2 class="fs-5 mb-0">✦ Subastas Activas</h2>
+      <a href="<?= url('subastas') ?>" class="btn btn-outline-magic btn-sm">Ver todas →</a>
     </div>
     <div class="row g-3">
-      <?php foreach($obras as $o): ?>
-      <div class="col-6 col-md-4 col-lg-3">
-        <div class="card-magic h-100">
-          <?php if(!empty($o['imagen_principal'])): ?>
-            <img src="<?= media_url('Originales/imagen/Obras_digitales/'.$o['imagen_principal']) ?>"
-                 class="card-img-top" alt="<?= e($o['titulo']) ?>">
-          <?php else: ?>
-            <div class="card-img-placeholder">
-              <i class="fa fa-image" style="font-size:2.5rem;color:rgba(166,189,255,.2)"></i>
-            </div>
+      <?php foreach(array_slice($subastas, 0, 4) as $s): ?>
+      <div class="col-md-6 col-lg-3">
+        <div class="card-magic">
+          <?php if(!empty($s['imagen_principal'])): ?>
+            <img src="<?= media_url('Originales/imagen/Obras_digitales/'.$s['imagen_principal']) ?>"
+                 class="card-img-top" alt="<?= e($s['titulo'] ?? '') ?>" style="height:160px;object-fit:cover"
+                 onerror="this.src='<?= url('resources/img/placeholder.png') ?>'">
           <?php endif; ?>
-          <div class="card-body d-flex flex-column">
-            <h6 class="card-title"><?= e($o['titulo']) ?></h6>
-            <p class="card-text small flex-grow-1"><?= e($o['artista_nombre'] ?? '') ?></p>
-            <?php if(!empty($o['precio'])): ?>
-              <div class="price-tag mb-2">$<?= number_format($o['precio'],2) ?></div>
-            <?php endif; ?>
-            <a href="<?= url('obra/'.$o['id']) ?>" class="btn-card btn">
-              Ver obra <i class="fa fa-arrow-right ms-1"></i>
+          <div class="card-body">
+            <div class="card-title mb-1"><?= e(truncate($s['titulo'] ?? 'Subasta', 28)) ?></div>
+            <div class="d-flex align-items-center justify-content-between mb-2">
+              <span style="font-size:.78rem;color:var(--pearl-muted)">Precio actual</span>
+              <span class="badge-gold">$<?= number_format($s['precio_actual'] ?? $s['precio_inicial'] ?? 0, 2) ?></span>
+            </div>
+            <div style="font-size:.75rem;color:var(--pearl-muted)" class="mb-2">
+              <i class="fa fa-clock me-1" style="color:var(--gold)"></i>
+              Cierra: <?= format_date($s['fecha_fin'] ?? '') ?>
+            </div>
+            <a href="<?= url('subastas') ?>" class="btn btn-magic btn-sm w-100">
+              <i class="fa fa-gavel me-1"></i>Ver subasta
             </a>
           </div>
         </div>
@@ -150,110 +176,3 @@
 </section>
 <?php endif; ?>
 
-<!-- ── ARTISTAS DESTACADOS ────────────────────────────────────────────── -->
-<?php if (!empty($artistas)): ?>
-<section class="section-magic" style="padding-top:0">
-  <div class="container">
-    <div class="d-flex justify-content-between align-items-end mb-4">
-      <div>
-        <h2 class="section-title mb-1">Artistas Destacados</h2>
-        <p class="small mb-0" style="color:rgba(244,247,251,.4)">Mentes creativas del mundo Artcania</p>
-      </div>
-      <a href="<?= url('artistas') ?>" class="btn-magic-outline btn btn-sm">
-        Ver todos <i class="fa fa-arrow-right ms-1"></i>
-      </a>
-    </div>
-    <div class="row g-3">
-      <?php foreach($artistas as $a): ?>
-      <div class="col-6 col-md-3">
-        <a href="<?= url('artistas/'.$a['usuario_id']) ?>" class="text-decoration-none">
-          <div class="artist-card">
-            <?php if(!empty($a['avatar'])): ?>
-              <img src="<?= media_url('Originales/imagen/Avatares/'.$a['avatar']) ?>"
-                   class="artist-avatar" alt="<?= e($a['nombre']) ?>">
-            <?php else: ?>
-              <div class="artist-avatar-placeholder">
-                <?= mb_strtoupper(mb_substr($a['nombre'],0,1)) ?>
-              </div>
-            <?php endif; ?>
-            <h6 class="mb-1" style="font-family:'Cinzel',serif;font-size:.88rem;color:var(--pearl)">
-              <?= e($a['nombre']) ?>
-            </h6>
-            <small style="color:rgba(244,247,251,.4)"><?= e($a['especialidad'] ?? 'Artista') ?></small>
-          </div>
-        </a>
-      </div>
-      <?php endforeach; ?>
-    </div>
-  </div>
-</section>
-<?php endif; ?>
-
-<!-- ── SUBASTAS ACTIVAS ───────────────────────────────────────────────── -->
-<?php if (!empty($subastas)): ?>
-<section class="section-magic" style="padding-top:0">
-  <div class="container">
-    <div class="d-flex justify-content-between align-items-end mb-4">
-      <div>
-        <h2 class="section-title mb-1">Subastas Activas</h2>
-        <p class="small mb-0" style="color:rgba(244,247,251,.4)">Ofertas en tiempo real</p>
-      </div>
-      <a href="<?= url('subastas') ?>" class="btn-magic-outline btn btn-sm">
-        Ver todas <i class="fa fa-arrow-right ms-1"></i>
-      </a>
-    </div>
-    <div class="row g-3">
-      <?php foreach($subastas as $s): ?>
-      <div class="col-md-6 col-lg-4">
-        <div class="card-magic">
-          <div class="card-body">
-            <div class="d-flex justify-content-between align-items-start mb-2">
-              <h6 class="card-title mb-0"><?= e($s['titulo'] ?? '') ?></h6>
-              <span class="badge" style="background:rgba(93,214,192,.15);color:var(--teal);border:1px solid rgba(93,214,192,.25)">
-                <i class="fa fa-circle" style="font-size:.45rem;vertical-align:middle;animation:pulse-glow 1.5s infinite"></i>
-                VIVO
-              </span>
-            </div>
-            <div class="d-flex justify-content-between align-items-center mt-3">
-              <div>
-                <small style="color:rgba(244,247,251,.4);font-size:.72rem">Oferta actual</small>
-                <div class="price-tag">$<?= number_format($s['precio_actual'] ?? $s['precio_inicial'] ?? 0, 2) ?></div>
-              </div>
-              <a href="<?= url('subasta/'.$s['id']) ?>" class="btn-card btn" style="width:auto;padding:.4rem 1rem">
-                Ofertar <i class="fa fa-gavel ms-1"></i>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <?php endforeach; ?>
-    </div>
-  </div>
-</section>
-<?php endif; ?>
-
-<!-- ── CTA FINAL ──────────────────────────────────────────────────────── -->
-<?php if (!Auth::check()): ?>
-<section class="section-magic" style="padding-top:0;padding-bottom:6rem">
-  <div class="container">
-    <div class="text-center p-5" style="background:linear-gradient(135deg,rgba(92,77,155,.2),rgba(93,214,192,.08));
-         border:1px solid rgba(166,189,255,.1);border-radius:20px">
-      <div style="font-size:3rem;margin-bottom:1rem">✦</div>
-      <h2 style="font-family:'Cinzel',serif;color:var(--pearl);margin-bottom:.75rem">
-        ¿Listo para explorar el reino del arte?
-      </h2>
-      <p style="color:rgba(244,247,251,.5);max-width:500px;margin:0 auto 2rem">
-        Únete a miles de artistas y amantes del arte que ya forman parte de Artcania.
-      </p>
-      <div class="d-flex justify-content-center gap-3 flex-wrap">
-        <a href="<?= url('registro') ?>" class="btn-magic btn">
-          <i class="fa fa-magic me-2"></i>Comenzar gratis
-        </a>
-        <a href="<?= url('galeria') ?>" class="btn-magic-outline btn">
-          <i class="fa fa-images me-2"></i>Ver galería
-        </a>
-      </div>
-    </div>
-  </div>
-</section>
-<?php endif; ?>
