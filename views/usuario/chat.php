@@ -1,52 +1,153 @@
 <?php $pageTitle = 'Chat'; ?>
-<div class="row g-0 shadow rounded overflow-hidden" style="height:70vh">
-  <div class="col-md-4 border-end bg-light">
-    <div class="p-3 border-bottom bg-white fw-bold"><i class="fa fa-comments me-2"></i>Conversaciones</div>
-    <div id="convList" style="overflow-y:auto;height:calc(70vh - 56px)">
-      <?php foreach($convs as $c): ?>
-      <div class="d-flex align-items-center gap-2 p-3 border-bottom conv-item" data-id="<?= $c['id'] ?>" style="cursor:pointer">
-        <img src="<?= avatar($c['otro_avatar']??'') ?>" class="rounded-circle" width="40" height="40" style="object-fit:cover">
-        <div class="flex-grow-1">
-          <strong><?= e($c['otro_nombre']) ?></strong>
-          <?php if($c['no_leidos']>0): ?><span class="badge bg-danger ms-1"><?= $c['no_leidos'] ?></span><?php endif; ?>
-        </div>
+<div class="chat-wrapper">
+
+  <!-- Lista conversaciones -->
+  <div class="chat-list" id="chatList">
+    <div class="chat-list-header">
+      <div class="d-flex align-items-center justify-content-between">
+        <span class="chat-list-title font-cinzel">Conversaciones ✦</span>
+        <button class="d-lg-none btn btn-sm" id="closeChatList"
+                style="background:none;border:none;color:var(--pearl-muted);font-size:1.1rem">
+          <i class="fa fa-xmark"></i>
+        </button>
       </div>
-      <?php endforeach; ?>
-      <?php if(empty($convs)): ?><div class="p-4 text-center text-muted"><i class="fa fa-comments fa-2x mb-2 d-block"></i>No tienes conversaciones</div><?php endif; ?>
+      <div class="mt-2">
+        <input class="form-control form-control-sm" type="search"
+               id="convSearch" placeholder="Buscar conversaciones...">
+      </div>
+    </div>
+
+    <div class="overflow-auto flex-grow-1">
+      <?php if(!empty($convs)): ?>
+        <?php foreach($convs as $c): ?>
+        <a href="<?= url('chat/'.$c['id']) ?>"
+           class="chat-conv-item <?= (isset($convId) && $convId==$c['id']) ? 'active' : '' ?>">
+          <img src="<?= avatar($c['otro_avatar'] ?? '') ?>" class="conv-avatar" alt="">
+          <div class="flex-grow-1 overflow-hidden">
+            <div class="d-flex align-items-center justify-content-between">
+              <span class="conv-name"><?= e($c['otro_nombre'] ?? 'Usuario') ?></span>
+              <span class="conv-time"><?= format_date($c['actualizado_en'] ?? '') ?></span>
+            </div>
+            <div class="conv-preview">
+              <?php if(($c['no_leidos'] ?? 0) > 0): ?>
+                <span class="nav-badge me-1"><?= $c['no_leidos'] ?></span>
+              <?php endif; ?>
+              <?= e(truncate($c['ultimo_mensaje'] ?? '...', 30)) ?>
+            </div>
+          </div>
+        </a>
+        <?php endforeach; ?>
+      <?php else: ?>
+        <div class="text-center py-4 px-3" style="color:var(--pearl-muted)">
+          <i class="fa fa-comments fa-2x mb-2" style="opacity:.3;display:block"></i>
+          <span style="font-size:.83rem">No tienes conversaciones</span>
+        </div>
+      <?php endif; ?>
     </div>
   </div>
-  <div class="col-md-8 d-flex flex-column">
-    <div class="p-3 bg-white border-bottom fw-bold" id="chatHeader">Selecciona una conversación</div>
-    <div id="chatMessages" class="flex-grow-1 p-3" style="overflow-y:auto;background:#f8f9fa"></div>
-    <div class="p-3 border-top bg-white">
-      <div class="input-group">
-        <input type="text" id="msgInput" class="form-control" placeholder="Escribe un mensaje..." disabled>
-        <button class="btn btn-primary" id="sendBtn" disabled onclick="sendMessage()"><i class="fa fa-paper-plane"></i></button>
+
+  <!-- Área de mensajes -->
+  <div class="chat-main">
+    <?php if(isset($convId) && !empty($mensajes ?? [])): ?>
+
+      <!-- Header -->
+      <div class="chat-header">
+        <button class="btn d-lg-none me-2" id="openChatList"
+                style="background:none;border:none;color:var(--pearl-dim);font-size:1rem;padding:.2rem .4rem">
+          <i class="fa fa-arrow-left"></i>
+        </button>
+        <img src="<?= avatar($otroUsuario['avatar'] ?? '') ?>"
+             class="rounded-circle" style="width:42px;height:42px;object-fit:cover;border:2px solid var(--purple-mid)" alt="">
+        <div>
+          <div style="font-weight:600;font-size:.9rem;color:var(--pearl)"><?= e($otroUsuario['nombre'] ?? '') ?></div>
+          <div style="font-size:.72rem;color:var(--teal)">● En línea</div>
+        </div>
+        <a href="<?= url('artistas/'.$otroUsuario['id']) ?>"
+           class="btn btn-outline-magic btn-sm ms-auto d-none d-md-inline-flex">
+          <i class="fa fa-user me-1"></i>Ver perfil
+        </a>
       </div>
-    </div>
+
+      <!-- Mensajes -->
+      <div class="chat-messages" id="chatMessages">
+        <?php
+        $prevDate = null;
+        foreach($mensajes as $m):
+          $msgDate = date('d/m/Y', strtotime($m['creado_en']));
+          $isOwn   = (int)$m['remitente_id'] === Auth::id();
+          if($msgDate !== $prevDate):
+            $prevDate = $msgDate;
+        ?>
+          <div class="text-center my-2">
+            <span style="background:rgba(124,58,237,.15);border:1px solid var(--border);border-radius:20px;padding:.2rem .9rem;font-size:.72rem;color:var(--pearl-muted)">
+              <?= $msgDate === date('d/m/Y') ? 'Hoy' : $msgDate ?>
+            </span>
+          </div>
+        <?php endif; ?>
+          <div class="d-flex <?= $isOwn ? 'justify-content-end' : 'justify-content-start' ?> align-items-end gap-2">
+            <?php if(!$isOwn): ?>
+              <img src="<?= avatar($otroUsuario['avatar'] ?? '') ?>"
+                   class="rounded-circle flex-shrink-0"
+                   style="width:30px;height:30px;object-fit:cover;border:1px solid var(--border)" alt="">
+            <?php endif; ?>
+            <div class="msg-bubble <?= $isOwn ? 'sent' : 'received' ?>">
+              <?= nl2br(e($m['mensaje'])) ?>
+              <span class="msg-time"><?= date('H:i', strtotime($m['creado_en'])) ?></span>
+            </div>
+          </div>
+        <?php endforeach; ?>
+      </div>
+
+      <!-- Input -->
+      <form class="chat-input-area" id="chatForm"
+            data-conv="<?= $convId ?>"
+            data-url="<?= url('chat/enviar') ?>">
+        <?= csrf_field() ?>
+        <span style="color:var(--purple-mid);font-size:1rem">✦</span>
+        <textarea class="chat-input" id="chatInput" rows="1"
+                  placeholder="Escribe tu mensaje..." required></textarea>
+        <button type="submit" class="chat-send-btn" title="Enviar">
+          <i class="fa fa-paper-plane" style="font-size:.85rem"></i>
+        </button>
+      </form>
+
+    <?php else: ?>
+      <!-- Empty state -->
+      <div class="d-flex flex-column align-items-center justify-content-center h-100 text-center p-4">
+        <div style="font-size:3rem;margin-bottom:1rem">💬</div>
+        <h5 class="font-cinzel mb-2" style="color:var(--pearl-muted)">Tus mensajes</h5>
+        <p style="font-size:.85rem;color:var(--pearl-muted);max-width:280px">
+          Selecciona una conversación o inicia una nueva desde el perfil de un artista.
+        </p>
+        <button class="btn btn-outline-magic btn-sm mt-2 d-lg-none" id="openChatListEmpty">
+          <i class="fa fa-comments me-1"></i>Ver conversaciones
+        </button>
+      </div>
+    <?php endif; ?>
   </div>
 </div>
+
+<script src="<?= asset('js/chat.js') ?>"></script>
 <script>
-let currentConv = null;
-const csrf = '<?= csrf_token() ?>';
-document.querySelectorAll('.conv-item').forEach(el=>{
-  el.addEventListener('click',()=>{ currentConv=el.dataset.id; loadMessages(); setInterval(loadMessages,3000); document.getElementById('msgInput').disabled=false; document.getElementById('sendBtn').disabled=false; el.style.background='#e8d5f5'; });
+// Auto-scroll
+var msgs = document.getElementById('chatMessages');
+if(msgs) msgs.scrollTop = msgs.scrollHeight;
+
+// Mobile toggle
+$('#openChatList,#openChatListEmpty').on('click',function(){
+  $('#chatList').addClass('show');
 });
-function loadMessages(){
-  if(!currentConv)return;
-  fetch('<?= url('chat/mensajes/') ?>'+currentConv,{headers:{'X-Requested-With':'XMLHttpRequest'}})
-  .then(r=>r.json()).then(msgs=>{
-    const box=document.getElementById('chatMessages');
-    box.innerHTML=msgs.map(m=>`<div class="mb-2 d-flex ${m.remitente_id==<?= Auth::id() ?>?'justify-content-end':'justify-content-start'}"><div class="rounded-3 px-3 py-2 ${m.remitente_id==<?= Auth::id() ?>?'bg-primary text-white':'bg-white border'}" style="max-width:70%"><small class="d-block fw-bold mb-1">${m.remitente_nombre}</small>${m.mensaje}<small class="d-block mt-1 opacity-75" style="font-size:.7em">${m.creado_en}</small></div></div>`).join('');
-    box.scrollTop=box.scrollHeight;
+$('#closeChatList').on('click',function(){
+  $('#chatList').removeClass('show');
+});
+
+// Search filter
+$('#convSearch').on('input',function(){
+  var q = $(this).val().toLowerCase();
+  $('.chat-conv-item').each(function(){
+    var name = $(this).find('.conv-name').text().toLowerCase();
+    $(this).toggle(name.includes(q));
   });
-}
-function sendMessage(){
-  const inp=document.getElementById('msgInput');
-  const msg=inp.value.trim();
-  if(!msg||!currentConv)return;
-  fetch('<?= url('chat/enviar') ?>',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded','X-Requested-With':'XMLHttpRequest'},body:`_csrf=${csrf}&conv_id=${currentConv}&mensaje=${encodeURIComponent(msg)}`})
-  .then(r=>r.json()).then(d=>{ if(d.ok){inp.value='';loadMessages();} });
-}
-document.getElementById('msgInput').addEventListener('keypress',e=>{ if(e.key==='Enter')sendMessage(); });
+});
 </script>
+
