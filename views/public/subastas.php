@@ -1,79 +1,100 @@
-<?php $pageTitle = 'Subastas';
-if (!isset($subastas)) { $subastas = []; }
-$featured = $subastas[0] ?? ['titulo'=>'Celestial Dreamweaver','artista'=>'Lyria Moonshadow','precio_actual'=>2750,'desc'=>'Celestial Dreamweaver weaves the threads of stardust and fate, crafting realities in the loom of the cosmos.'];
-?>
-<div class="container py-4">
-  <div class="row g-4">
-    <div class="col-lg-7">
-      <div class="d-flex align-items-center gap-3 mb-3">
-        <span class="live-badge"><span class="dot"></span> LIVE AUCTION</span>
-        <h2 style="font-family:'Cinzel',serif;color:var(--gold);margin:0;font-size:1.8rem;letter-spacing:.08em">✦ <?= strtoupper(e($featured['titulo'])) ?></h2>
-      </div>
-      <p style="color:var(--lavender);font-style:italic;font-family:'Cormorant Garamond',serif;margin-bottom:1rem">by <?= e($featured['artista']??'Artist') ?></p>
-      <div class="glass-panel p-0" style="border:1px solid rgba(255,213,138,.3);border-radius:18px;overflow:hidden">
-        <div style="aspect-ratio:4/5;background:linear-gradient(135deg,#1a0a40,#7a3df0,#c77dff)"></div>
-      </div>
-      <div class="mt-4">
-        <h5 style="font-family:'Cinzel',serif;color:var(--gold);letter-spacing:.1em">✦ ABOUT THIS ARTWORK</h5>
-        <p style="color:rgba(212,184,255,.85);font-family:'Cormorant Garamond',serif;font-size:1.05rem">
-          <?= e($featured['desc'] ?? 'A vision of serenity, power, and infinite possibilities woven through stardust.') ?>
-        </p>
-        <div class="d-flex flex-wrap gap-2">
-          <span class="pill">2024</span><span class="pill">DIGITAL ART</span><span class="pill">FANTASY</span><span class="pill">COSMIC</span><span class="pill">PURPLE COLLECTION</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-lg-5">
-      <div class="glass-panel mb-3">
-        <small style="color:rgba(212,184,255,.65);letter-spacing:.15em">CURRENT BID</small>
-        <div class="current-bid"><?= number_format(($featured['precio_actual']??0)/1000,3) ?> ETH</div>
-        <small style="color:rgba(212,184,255,.65)">≈ $<?= number_format(($featured['precio_actual']??0)*2.5,2) ?> USD</small>
-        <hr style="border-color:rgba(212,184,255,.15);margin:1rem 0">
-        <small style="color:rgba(212,184,255,.65);letter-spacing:.15em">⏳ AUCTION ENDS IN</small>
-        <div class="countdown-box">
-          <div class="cell"><div class="num">00</div><div class="lbl">DAYS</div></div>
-          <div class="cell"><div class="num">12</div><div class="lbl">HOURS</div></div>
-          <div class="cell"><div class="num">47</div><div class="lbl">MINUTES</div></div>
-          <div class="cell"><div class="num">33</div><div class="lbl">SECONDS</div></div>
-        </div>
-        <hr style="border-color:rgba(212,184,255,.15);margin:1rem 0">
-        <small style="color:rgba(212,184,255,.65);letter-spacing:.15em">PLACE YOUR BID</small>
-        <div class="input-group mt-2 mb-3" style="background:rgba(12,6,30,.6);border:1px solid rgba(212,184,255,.22);border-radius:12px">
-          <input class="input-magic border-0" placeholder="Enter amount in ETH" style="background:transparent">
-          <span class="px-3 d-flex align-items-center" style="color:var(--lavender)">ETH</span>
-        </div>
-        <button class="btn-magic w-100" style="background:linear-gradient(135deg,#5eead4,#14b8a6);color:#06030f;border:none;font-size:1rem;padding:.8rem">✦ PUJAR ✦</button>
-        <small class="d-block text-center mt-2" style="color:rgba(212,184,255,.55)">Minimum next bid: 2.800 ETH</small>
-      </div>
-
-      <div class="glass-panel">
-        <h6 style="font-family:'Cinzel',serif;color:var(--gold);letter-spacing:.1em">BID HISTORY</h6>
-        <?php $bids=[['StarGazer','2.750','2 min ago'],['MoonCollector','2.500','7 min ago'],['ArcaneDreamer','2.250','15 min ago'],['VisionSeeker','2.000','28 min ago'],['EtherealMuse','1.750','45 min ago']];
-        foreach($bids as $b): ?>
-        <div class="d-flex justify-content-between align-items-center py-2" style="border-bottom:1px solid rgba(212,184,255,.08)">
-          <div class="d-flex align-items-center gap-2"><span style="color:var(--magenta)">✦</span><span style="color:var(--moon)"><?= $b[0] ?></span></div>
-          <div style="color:#5eead4;font-weight:600"><?= $b[1] ?> ETH</div>
-          <small style="color:rgba(212,184,255,.55)"><?= $b[2] ?></small>
-        </div>
-        <?php endforeach; ?>
-        <a href="#" class="btn-magic w-100 mt-3">VIEW FULL HISTORY</a>
-      </div>
-    </div>
+<?php $pageTitle = 'Subastas'; ?>
+<div class="container-xl py-4">
+  <div class="d-flex align-items-center justify-content-between mb-4">
+    <h1 class="fs-5 font-cinzel mb-0">✦ Subastas Activas</h1>
+    <span class="badge-gold"><?= count($subastas ?? []) ?> activas</span>
   </div>
 
-  <h3 class="mt-5 mb-3" style="font-family:'Cinzel',serif;color:var(--gold);letter-spacing:.1em">✦ OTHER ACTIVE AUCTIONS</h3>
+  <?php if(!empty($subastas)): ?>
   <div class="row g-3">
-    <?php $others=[['Voidlight Citadel','Evanor Skye','1.950','01:08:22'],['Spirit of the Glen','Faelin Whisper','1.420','02:35:10'],['Astral Leviathan','Kael Norwen','3.100','05:22:45'],['The Luminous Sanctuary','Mirae Sol','2.600','06:47:18'],['Stardust Embrace','Orion Vale','1.250','09:11:33']];
-    foreach($others as $i=>$o): ?>
-    <div class="col-md-6 col-lg-4 col-xl">
-      <a class="magic-card d-block text-decoration-none">
-        <div style="aspect-ratio:1/1;border-radius:10px;background:linear-gradient(<?= ($i*60)%360 ?>deg,#1a0a40,#7a3df0);margin-bottom:.7rem"></div>
-        <h6 style="font-family:'Cinzel',serif;color:var(--gold);font-size:.95rem"><?= e($o[0]) ?></h6>
-        <small class="d-block" style="color:var(--lavender)">by <?= e($o[1]) ?></small>
-        <div class="d-flex justify-content-between mt-2"><b style="color:#5eead4"><?= e($o[2]) ?> ETH</b><small style="color:rgba(212,184,255,.6)">⏳ <?= e($o[3]) ?></small></div>
-      </a>
+    <?php foreach($subastas as $s): ?>
+    <div class="col-md-6 col-xl-4">
+      <div class="card-magic overflow-hidden">
+        <?php if(!empty($s['imagen_principal'])): ?>
+          <img src="<?= media_url('Originales/imagen/Obras_digitales/'.$s['imagen_principal']) ?>"
+               class="card-img-top" style="height:200px;object-fit:cover"
+               alt="<?= e($s['titulo'] ?? '') ?>"
+               onerror="this.src='<?= url('resources/img/placeholder.png') ?>'">
+        <?php endif; ?>
+        <div class="card-body">
+          <h5 class="card-title mb-1"><?= e(truncate($s['titulo'] ?? 'Subasta', 35)) ?></h5>
+          <div style="font-size:.78rem;color:var(--pearl-muted);margin-bottom:.75rem">
+            <i class="fa fa-user me-1" style="color:var(--purple-mid)"></i><?= e($s['artista'] ?? '') ?>
+          </div>
+
+          <div class="row g-2 mb-3">
+            <div class="col-6">
+              <div style="font-size:.7rem;color:var(--pearl-muted);text-transform:uppercase;letter-spacing:.08em">Precio actual</div>
+              <div class="badge-gold mt-1" style="font-size:.9rem">
+                $<?= number_format($s['precio_actual'] ?? $s['precio_inicial'] ?? 0, 2) ?>
+              </div>
+            </div>
+            <div class="col-6 text-end">
+              <div style="font-size:.7rem;color:var(--pearl-muted);text-transform:uppercase;letter-spacing:.08em">Cierra</div>
+              <div style="font-size:.8rem;color:var(--gold);margin-top:.25rem">
+                <i class="fa fa-clock me-1"></i>
+                <?= format_date($s['fecha_fin'] ?? '') ?>
+              </div>
+            </div>
+          </div>
+
+          <?php if(Auth::check()): ?>
+          <form class="pujar-form" data-id="<?= $s['id'] ?>">
+            <?= csrf_field() ?>
+            <div class="input-group input-group-sm mb-2">
+              <span class="input-group-text">$</span>
+              <input type="number" class="form-control monto-input"
+                     placeholder="Tu oferta"
+                     min="<?= ($s['precio_actual'] ?? $s['precio_inicial'] ?? 0) + 1 ?>"
+                     step="0.01">
+              <button type="submit" class="btn btn-magic" style="padding:.3rem .9rem;font-size:.82rem">
+                <i class="fa fa-gavel me-1"></i>Pujar
+              </button>
+            </div>
+            <div class="pujar-msg" style="font-size:.75rem;min-height:18px"></div>
+          </form>
+          <?php else: ?>
+          <a href="<?= url('login') ?>" class="btn btn-outline-magic btn-sm w-100">
+            <i class="fa fa-gavel me-1"></i>Iniciar sesión para pujar
+          </a>
+          <?php endif; ?>
+        </div>
+      </div>
     </div>
     <?php endforeach; ?>
   </div>
+  <?php else: ?>
+  <div class="text-center py-5" style="color:var(--pearl-muted)">
+    <i class="fa fa-gavel fa-4x mb-3" style="opacity:.2;display:block"></i>
+    <h5 class="font-cinzel">No hay subastas activas</h5>
+  </div>
+  <?php endif; ?>
 </div>
+
+<script>
+$(document).on('submit', '.pujar-form', function(e){
+  e.preventDefault();
+  var form = $(this);
+  var id   = form.data('id');
+  var monto = form.find('.monto-input').val();
+  var csrf  = form.find('input[name="_csrf_token"]').val();
+  var msg   = form.find('.pujar-msg');
+
+  fetch(BASE_URL + '/subasta/pujar', {
+    method: 'POST',
+    headers: {'Content-Type':'application/x-www-form-urlencoded','X-Requested-With':'XMLHttpRequest'},
+    body: '_csrf='+encodeURIComponent(csrf)+'&subasta_id='+id+'&monto='+monto
+  })
+  .then(r => r.json())
+  .then(d => {
+    if(d.ok){
+      msg.html('<span style="color:#4ade80"><i class="fa fa-check me-1"></i>¡Puja registrada!</span>');
+      form.find('.monto-input').val('');
+    } else {
+      msg.html('<span style="color:#f87171"><i class="fa fa-xmark me-1"></i>'+(d.error||'Error al pujar')+'</span>');
+    }
+  })
+  .catch(()=> msg.html('<span style="color:#f87171">Error de conexión</span>'));
+});
+</script>
+
