@@ -1,40 +1,39 @@
 <?php $pageTitle = 'Mis Favoritos'; ?>
-<div class="d-flex justify-content-between align-items-center mb-4">
-  <h2 class="fw-bold"><i class="fa fa-heart text-danger me-2"></i>Mis Favoritos</h2>
-  <span class="badge bg-danger fs-6"><?= count($favs) ?> obras</span>
+<div class="d-flex align-items-center justify-content-between mb-4">
+  <h2 class="fs-5 font-cinzel mb-0">✦ Mis Favoritos</h2>
+  <span class="badge-magic"><?= count($favs ?? []) ?></span>
 </div>
-<div class="row g-4">
+
+<?php if(!empty($favs)): ?>
+<div class="gallery-grid">
   <?php foreach($favs as $f): ?>
-  <div class="col-6 col-md-4 col-lg-3">
-    <div class="card shadow-sm hover-card h-100">
-      <?php if($f['imagen_principal']): ?>
-      <img src="<?= media_url('Originales/imagen/Obras_digitales/'.$f['imagen_principal']) ?>" class="card-img-top" style="height:180px;object-fit:cover">
-      <?php else: ?>
-      <div class="bg-light d-flex align-items-center justify-content-center" style="height:180px"><i class="fa fa-image fa-3x text-muted"></i></div>
-      <?php endif; ?>
-      <div class="card-body p-3">
-        <h6 class="fw-bold mb-1"><?= e(truncate($f['titulo'],30)) ?></h6>
-        <small class="text-muted">por <?= e($f['artista']) ?></small>
-        <?php if($f['precio']): ?><p class="text-success fw-bold mb-0 mt-1"><?= money($f['precio']) ?></p><?php endif; ?>
-      </div>
-      <div class="card-footer bg-transparent p-2 d-flex gap-1">
-        <a href="<?= url('obra/'.$f['obra_id']) ?>" class="btn btn-sm btn-primary flex-grow-1">Ver Obra</a>
-        <button class="btn btn-sm btn-outline-danger" onclick="toggleFav(<?= $f['obra_id'] ?>, this)"><i class="fa fa-heart"></i></button>
-      </div>
+  <div class="gallery-item" onclick="location.href='<?= url('galeria/'.$f['obra_id']) ?>'">
+    <?php if(!empty($f['imagen_principal'])): ?>
+      <img src="<?= media_url('Originales/imagen/Obras_digitales/'.$f['imagen_principal']) ?>"
+           alt="<?= e($f['titulo'] ?? '') ?>" loading="lazy"
+           onerror="this.src='<?= url('resources/img/placeholder.png') ?>'">
+    <?php else: ?>
+      <div style="height:180px;background:var(--purple-soft);display:flex;align-items:center;justify-content:center;font-size:2rem">🎨</div>
+    <?php endif; ?>
+    <button class="gallery-fav-btn fav-btn active" data-id="<?= $f['obra_id'] ?>"
+            onclick="event.stopPropagation()" title="Quitar favorito">
+      <i class="fa-solid fa-heart" style="color:#f472b6"></i>
+    </button>
+    <div class="gallery-item-overlay">
+      <div class="obra-title"><?= e(truncate($f['titulo'] ?? '',35)) ?></div>
+      <div class="obra-artist">✦ <?= e($f['artista_nombre'] ?? '') ?></div>
     </div>
   </div>
   <?php endforeach; ?>
-  <?php if(empty($favs)): ?>
-  <div class="col-12 text-center py-5 text-muted">
-    <i class="fa fa-heart fa-3x mb-3 d-block text-danger"></i>
-    <h5>No tienes obras en favoritos</h5>
-    <a href="<?= url('galeria') ?>" class="btn btn-primary mt-2">Explorar Galería</a>
-  </div>
-  <?php endif; ?>
 </div>
-<script>
-function toggleFav(id, btn){
-  fetch('<?= url('favorito/toggle') ?>', {method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded','X-Requested-With':'XMLHttpRequest'},body:`_csrf=<?=csrf_token()?>&obra_id=${id}`})
-  .then(r=>r.json()).then(d=>{ if(!d.added) btn.closest('.card').remove(); });
-}
-</script>
+<?php else: ?>
+<div class="text-center py-5" style="color:var(--pearl-muted)">
+  <i class="fa fa-heart fa-4x mb-3" style="opacity:.2;display:block"></i>
+  <h5 class="font-cinzel">Aún no tienes favoritos</h5>
+  <p style="font-size:.85rem">Explora la galería y guarda las obras que más te gusten</p>
+  <a href="<?= url('galeria') ?>" class="btn btn-magic px-4">
+    <i class="fa fa-compass me-2"></i>Explorar galería
+  </a>
+</div>
+<?php endif; ?>
+
