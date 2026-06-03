@@ -1,2 +1,2 @@
-config/credentials.php
-config/database.php
+<?php $pageTitle = ''; ?>
+<?php header('Location: '.url('perfil')); exit; ?>
