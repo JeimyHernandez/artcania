@@ -1,23 +1,46 @@
-<?php $pageTitle = 'Acerca de'; ?>
-<div class="container py-5">
-  <div class="row justify-content-center">
-    <div class="col-lg-8">
-      <div class="text-center mb-5">
-        <h1 class="fw-bold" style="color:#6c3483"><i class="fa fa-palette me-2"></i>Artcania</h1>
-        <p class="lead text-muted">Donde el arte digital encuentra su hogar</p>
+<?php $pageTitle = 'Sobre nosotros'; ?>
+<div class="container-xl py-5">
+  <div class="text-center mb-5">
+    <div class="divider-magic justify-content-center mb-3">✦</div>
+    <h1 class="font-cinzel" style="font-size:clamp(2rem,4vw,3rem)">Sobre Artcania</h1>
+    <p class="hero-sub mx-auto mt-3">
+      Un mundo donde el arte no tiene límites. Exploramos, conectamos e inspiramos a una comunidad
+      apasionada por la creatividad y la imaginación.
+    </p>
+  </div>
+
+  <div class="row g-4 justify-content-center mb-5">
+    <?php
+    $values = [
+      ['icon'=>'✨','title'=>'Creatividad sin límites','desc'=>'Cada obra es un portal a un universo único. Aquí la imaginación es el único límite.'],
+      ['icon'=>'🌟','title'=>'Comunidad mágica',     'desc'=>'Artistas, coleccionistas y amantes del arte unidos en un espacio sagrado de creación.'],
+      ['icon'=>'🛡️','title'=>'Arte protegido',        'desc'=>'Cada creación tiene un hogar seguro. Protegemos la obra y el legado de cada artista.'],
+    ];
+    foreach($values as $v): ?>
+    <div class="col-md-4">
+      <div class="category-card text-center p-4">
+        <div class="cat-icon" style="font-size:3rem"><?= $v['icon'] ?></div>
+        <h5 class="font-cinzel mb-2" style="font-size:.95rem"><?= $v['title'] ?></h5>
+        <p style="font-size:.83rem;color:var(--pearl-dim);line-height:1.6"><?= $v['desc'] ?></p>
       </div>
-      <div class="card shadow-lg border-0 mb-4">
-        <div class="card-body p-5">
-          <h4 class="fw-bold mb-3">¿Qué es Artcania?</h4>
-          <p>Artcania es una plataforma digital de arte que conecta a artistas talentosos con coleccionistas, amantes del arte y curadores en un espacio seguro, moderno e inclusivo.</p>
-          <h4 class="fw-bold mt-4 mb-3">Nuestra Misión</h4>
-          <p>Democratizar el acceso al arte digital y proporcionar a los artistas las herramientas necesarias para exhibir, vender y conectar con su audiencia globalmente.</p>
-          <div class="row g-4 mt-2">
-            <div class="col-md-4 text-center"><i class="fa fa-palette fa-3x mb-2" style="color:#6c3483"></i><h6 class="fw-bold">Para Artistas</h6><p class="small text-muted">Exhibe tu obra, vende ediciones limitadas y conecta con coleccionistas.</p></div>
-            <div class="col-md-4 text-center"><i class="fa fa-users fa-3x mb-2 text-success"></i><h6 class="fw-bold">Para Coleccionistas</h6><p class="small text-muted">Descubre arte único, participa en subastas y construye tu colección.</p></div>
-            <div class="col-md-4 text-center"><i class="fa fa-eye fa-3x mb-2 text-warning"></i><h6 class="fw-bold">Para Curadores</h6><p class="small text-muted">Valida obras, organiza exposiciones y moldea el panorama artístico.</p></div>
-          </div>
-        </div>
+    </div>
+    <?php endforeach; ?>
+  </div>
+
+  <div class="stats-banner text-center">
+    <h2 class="font-cinzel mb-4" style="font-size:1.1rem;color:var(--gold-light)">✦ Artcania en números</h2>
+    <div class="row g-3">
+      <div class="col-6 col-md-3 stat-item">
+        <h3>10K+</h3><small>Artistas</small>
+      </div>
+      <div class="col-6 col-md-3 stat-item">
+        <h3>50K+</h3><small>Obras</small>
+      </div>
+      <div class="col-6 col-md-3 stat-item">
+        <h3>200K+</h3><small>Usuarios</small>
+      </div>
+      <div class="col-6 col-md-3 stat-item">
+        <h3>15+</h3><small>Países</small>
       </div>
     </div>
   </div>
