@@ -1,60 +1,87 @@
-<?php $pageTitle = 'Mi Perfil';
-$u = $user ?? Auth::user();
-$favoritos = $favoritos ?? [];
-?>
-<div class="container-fluid py-3">
-  <div class="profile-hero" style="height:240px;border-radius:24px">
-    <div style="width:100%;height:100%;background:linear-gradient(135deg,#1a0a40 0%,#3a1880 40%,#7a3df0 70%,#c77dff 100%)"></div>
-    <img class="profile-avatar-lg" src="<?= !empty($u['avatar'])?avatar($u['avatar']):'https://api.dicebear.com/7.x/lorelei/svg?seed='.urlencode($u['nombre']??'user').'&backgroundColor=2a1458' ?>" alt="">
-  </div>
-
-  <div class="row g-4 align-items-end mb-4" style="padding-left:220px">
-    <div class="col-lg-6">
-      <h1 style="font-family:'Cinzel',serif;color:var(--moon);font-size:3rem;letter-spacing:.1em;margin:0">
-        <?= strtoupper(e($u['nombre']??'USUARIO')) ?>
-        <?php if(($u['rol']??'')=='artista'): ?><span class="badge ms-2" style="background:linear-gradient(135deg,#5eead4,#14b8a6);color:#06030f;font-size:.7rem">✦ ARTISTA</span><?php endif; ?>
-      </h1>
-      <p style="color:var(--magenta);font-family:'Cormorant Garamond',serif;font-size:1.1rem">@<?= e(strtolower($u['nombre']??'usuario')) ?>.art</p>
-      <p style="color:rgba(212,184,255,.85);font-family:'Cormorant Garamond',serif;font-size:1.1rem;max-width:520px"><?= e($u['biografia'] ?? 'Tejedora de sueños y fragmentos de luz. Exploro lo etéreo, lo ancestral y lo mágico a través del arte.') ?></p>
-      <div class="d-flex gap-3" style="color:rgba(212,184,255,.7)"><span><i class="fa fa-map-marker-alt"></i> Arcadia Astral</span><span><i class="fa fa-calendar"></i> Se unió en Mayo 2023</span></div>
-    </div>
-    <div class="col-lg-6">
-      <div class="glass-panel d-flex justify-content-around" style="border:1px solid rgba(255,213,138,.25)">
-        <div class="stat-block"><i class="fa fa-heart fa-lg" style="color:var(--magenta)"></i><div class="num"><?= e($u['favoritos']??412) ?></div><div class="lbl">FAVORITOS</div></div>
-        <div class="stat-block"><i class="fa fa-star fa-lg" style="color:var(--magenta)"></i><div class="num"><?= e($u['valoraciones']??256) ?></div><div class="lbl">VALORACIONES</div></div>
-        <div class="stat-block"><i class="fa fa-user-plus fa-lg" style="color:var(--magenta)"></i><div class="num"><?= e($u['seguidos']??389) ?></div><div class="lbl">SEGUIDOS</div></div>
+<?php $pageTitle = 'Mi Perfil'; ?>
+<div class="row g-4">
+  <!-- Perfil card -->
+  <div class="col-md-4 col-lg-3">
+    <div class="card-magic p-4 text-center">
+      <div class="position-relative d-inline-block mb-3">
+        <img src="<?= avatar($user['avatar'] ?? '') ?>"
+             class="rounded-circle"
+             style="width:100px;height:100px;object-fit:cover;border:3px solid var(--gold);box-shadow:0 0 25px var(--gold-glow)"
+             alt="<?= e($user['nombre']) ?>">
       </div>
+      <h5 class="font-cinzel mb-1"><?= e($user['nombre']) ?></h5>
+      <div class="badge-magic mb-2"><?= ucfirst($user['rol'] ?? 'usuario') ?></div>
+      <?php if(!empty($user['bio'])): ?>
+        <p style="font-size:.83rem;color:var(--pearl-dim);line-height:1.6"><?= nl2br(e($user['bio'])) ?></p>
+      <?php endif; ?>
+      <div class="divider-magic my-3">✦</div>
+      <div class="d-flex justify-content-around">
+        <div class="text-center">
+          <div style="font-family:'Cinzel',serif;font-size:1.2rem;color:var(--pearl)"><?= count($favs ?? []) ?></div>
+          <div style="font-size:.7rem;color:var(--pearl-muted);text-transform:uppercase">Favoritos</div>
+        </div>
+        <div class="text-center">
+          <div style="font-family:'Cinzel',serif;font-size:1.2rem;color:var(--pearl)"><?= count($notif ?? []) ?></div>
+          <div style="font-size:.7rem;color:var(--pearl-muted);text-transform:uppercase">Notif.</div>
+        </div>
+      </div>
+      <a href="<?= url('editar-perfil') ?>" class="btn btn-outline-magic btn-sm w-100 mt-3">
+        <i class="fa fa-pen-to-square me-1"></i>Editar perfil
+      </a>
     </div>
   </div>
 
-  <div class="tabs-magic">
-    <a href="<?= url('mis-favoritos') ?>" class="active">Mis Favoritos</a>
-    <a href="<?= url('mis-valoraciones') ?>">Valoraciones</a>
-    <a href="<?= url('notificaciones') ?>">Notificaciones <span class="badge rounded-pill ms-1" style="background:var(--magenta)">3</span></a>
-    <a href="<?= url('mis-conversaciones') ?>">Conversaciones <span class="badge rounded-pill ms-1" style="background:var(--magenta)">2</span></a>
-  </div>
-
-  <div class="row g-4">
-    <?php if(empty($favoritos)): $favoritos=[
-      ['titulo'=>'Ciudad Entre Nubes','autor'=>'Aeloria','stars'=>98,'comments'=>12],
-      ['titulo'=>'Guardián del Bosque Luminal','autor'=>'Erathion','stars'=>124,'comments'=>8],
-      ['titulo'=>'La Sacerdotisa de la Luna','autor'=>'Nyxara','stars'=>76,'comments'=>6],
-      ['titulo'=>'Pacto de Cenizas','autor'=>'Drakhelm','stars'=>159,'comments'=>15],
-    ]; endif; foreach($favoritos as $i=>$f): ?>
-    <div class="col-6 col-md-4 col-lg-3">
-      <div class="fanart-card">
-        <div class="img" style="background-image:linear-gradient(<?= ($i*65)%360 ?>deg,#1a0a40,#7a3df0,#c77dff);position:relative">
-          <span class="star" style="background:rgba(199,125,255,.85);width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff"><i class="fa fa-heart"></i></span>
+  <!-- Actividad reciente -->
+  <div class="col-md-8 col-lg-9">
+    <!-- Favoritos recientes -->
+    <div class="card-magic p-3 mb-3">
+      <div class="d-flex align-items-center justify-content-between mb-3">
+        <h6 class="font-cinzel mb-0" style="color:var(--gold-light)">✦ Mis Favoritos</h6>
+        <a href="<?= url('mis-favoritos') ?>" class="btn btn-sm btn-outline-magic">Ver todos</a>
+      </div>
+      <?php if(!empty($favs)): ?>
+      <div class="row g-2">
+        <?php foreach(array_slice($favs, 0, 6) as $f): ?>
+        <div class="col-4 col-md-2">
+          <a href="<?= url('galeria/'.$f['obra_id']) ?>">
+            <img src="<?= media_url('Originales/imagen/Obras_digitales/'.($f['imagen_principal'] ?? '')) ?>"
+                 class="w-100 rounded"
+                 style="height:70px;object-fit:cover;border:1px solid var(--border);transition:border-color .2s"
+                 onmouseover="this.style.borderColor='var(--purple-mid)'"
+                 onmouseout="this.style.borderColor='var(--border)'"
+                 alt=""
+                 onerror="this.src='<?= url('resources/img/placeholder.png') ?>'">
+          </a>
         </div>
-        <div class="body">
-          <h6><?= e($f['titulo']) ?></h6>
-          <div class="d-flex justify-content-between mt-1">
-            <small style="color:var(--lavender)">por <?= e($f['autor']) ?></small>
-            <small style="color:rgba(212,184,255,.7)"><i class="fa fa-star" style="color:var(--magenta)"></i> <?= e($f['stars']) ?> &nbsp;<i class="fa fa-comment"></i> <?= e($f['comments']) ?></small>
+        <?php endforeach; ?>
+      </div>
+      <?php else: ?>
+        <p style="color:var(--pearl-muted);font-size:.85rem">Aún no tienes obras favoritas.</p>
+      <?php endif; ?>
+    </div>
+
+    <!-- Notificaciones recientes -->
+    <div class="card-magic p-3">
+      <div class="d-flex align-items-center justify-content-between mb-3">
+        <h6 class="font-cinzel mb-0" style="color:var(--gold-light)">✦ Notificaciones</h6>
+        <a href="<?= url('notificaciones') ?>" class="btn btn-sm btn-outline-magic">Ver todas</a>
+      </div>
+      <?php if(!empty($notif)): ?>
+        <?php foreach(array_slice($notif, 0, 5) as $n): ?>
+        <div class="d-flex align-items-start gap-3 pb-2 mb-2"
+             style="border-bottom:1px solid var(--border);opacity:<?= $n['leida'] ? '.6' : '1' ?>">
+          <i class="fa fa-bell mt-1 flex-shrink-0" style="color:var(--<?= $n['leida'] ? 'pearl-muted' : 'gold-light' ?>)"></i>
+          <div>
+            <div style="font-size:.83rem;color:var(--pearl)"><?= e($n['mensaje']) ?></div>
+            <div style="font-size:.72rem;color:var(--pearl-muted)"><?= format_date($n['creado_en']) ?></div>
           </div>
         </div>
-      </div>
+        <?php endforeach; ?>
+      <?php else: ?>
+        <p style="color:var(--pearl-muted);font-size:.85rem">No tienes notificaciones nuevas.</p>
+      <?php endif; ?>
     </div>
-    <?php endforeach; ?>
   </div>
 </div>
+
+
