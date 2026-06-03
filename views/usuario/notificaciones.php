@@ -1,34 +1,43 @@
 <?php $pageTitle = 'Notificaciones'; ?>
-<?php if(!isset($notifs)) $notifs = []; ?>
-<div class="d-flex justify-content-between align-items-center mb-4">
-  <h2 class="fw-bold"><i class="fa fa-bell me-2"></i>Notificaciones</h2>
-  <span class="badge bg-secondary"><?= count($notifs) ?></span>
+<div class="d-flex align-items-center justify-content-between mb-4">
+  <h2 class="fs-5 font-cinzel mb-0">✦ Notificaciones</h2>
+  <?php if(!empty($notifs)): ?>
+  <form method="POST" action="<?= url('notificaciones/leer') ?>">
+    <?= csrf_field() ?>
+    <button type="submit" class="btn btn-sm btn-outline-magic">
+      <i class="fa fa-check-double me-1"></i>Marcar todas leídas
+    </button>
+  </form>
+  <?php endif; ?>
 </div>
-<div class="card shadow">
-  <div class="card-body p-0">
-    <?php foreach($notifs as $n): ?>
-    <div class="d-flex align-items-center border-bottom p-3 <?= !$n['leida']?'bg-light':'' ?>">
-      <div class="me-3">
-        <?php $ic=['venta'=>'fa-dollar-sign text-success','obra_aprobada'=>'fa-check-circle text-success','obra_rechazada'=>'fa-times-circle text-danger','comentario'=>'fa-comment text-primary'][$n['tipo']]??'fa-bell text-warning'; ?>
-        <i class="fa <?= $ic ?> fa-lg"></i>
-      </div>
-      <div class="flex-grow-1">
-        <p class="mb-0"><?= e($n['mensaje']) ?></p>
-        <small class="text-muted"><?= format_date($n['creado_en']) ?></small>
-      </div>
-      <?php if(!$n['leida']): ?>
-      <button class="btn btn-sm btn-outline-secondary ms-2" onclick="marcarLeida(<?= $n['id'] ?>, this)">
-        <i class="fa fa-check"></i>
-      </button>
-      <?php endif; ?>
+
+<?php if(!empty($notifs)): ?>
+<div class="card-magic p-0 overflow-hidden">
+  <?php foreach($notifs as $n): ?>
+  <div class="d-flex align-items-start gap-3 p-3"
+       style="border-bottom:1px solid var(--border);<?= !$n['leida'] ? 'background:rgba(124,58,237,.06)' : '' ?>">
+    <div style="width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:<?= $n['leida'] ? 'rgba(124,58,237,.1)' : 'rgba(201,162,39,.15)' ?>">
+      <i class="fa fa-bell" style="color:<?= $n['leida'] ? 'var(--pearl-muted)' : 'var(--gold-light)' ?>"></i>
     </div>
-    <?php endforeach; ?>
-    <?php if(empty($notifs)): ?><div class="p-5 text-center text-muted"><i class="fa fa-bell-slash fa-3x mb-3 d-block"></i>No tienes notificaciones.</div><?php endif; ?>
+    <div class="flex-grow-1">
+      <div style="font-size:.875rem;color:var(--pearl);<?= !$n['leida'] ? 'font-weight:600' : '' ?>">
+        <?= e($n['mensaje']) ?>
+      </div>
+      <div style="font-size:.73rem;color:var(--pearl-muted);margin-top:.2rem">
+        <?= format_date($n['creado_en']) ?>
+      </div>
+    </div>
+    <?php if(!$n['leida']): ?>
+      <div style="width:8px;height:8px;border-radius:50%;background:var(--gold-light);flex-shrink:0;margin-top:6px;box-shadow:0 0 6px var(--gold-glow)"></div>
+    <?php endif; ?>
   </div>
+  <?php endforeach; ?>
 </div>
-<script>
-function marcarLeida(id, btn){
-  fetch('<?= url('notificaciones/leer') ?>', {method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded','X-Requested-With':'XMLHttpRequest'},body:`_csrf=<?=csrf_token()?>&id=${id}`})
-  .then(r=>r.json()).then(d=>{ if(d.ok){ btn.closest('.d-flex').classList.remove('bg-light'); btn.remove(); } });
-}
-</script>
+<?php else: ?>
+<div class="text-center py-5" style="color:var(--pearl-muted)">
+  <i class="fa fa-bell-slash fa-4x mb-3" style="opacity:.2;display:block"></i>
+  <h5 class="font-cinzel">Sin notificaciones</h5>
+  <p style="font-size:.85rem">Cuando haya actividad en tus obras o cuenta, aparecerá aquí</p>
+</div>
+<?php endif; ?>
+
