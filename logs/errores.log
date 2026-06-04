@@ -1,1 +1,4 @@
-[2026-05-23 15:48:11] [ERROR] Mailer: oauth_refresh_token vacío. Abre /oauth_mail_setup.php para autorizarlo.
+[2026-06-02 04:18:32] [ERROR] register: SQLSTATE[HY000]: General error: 2006 MySQL server has gone away
+[2026-06-02 04:19:58] [ERROR] Mailer: smtp_pass vacío. Configura el App Password de Gmail en config/app.php → mail → smtp_pass
+[2026-06-02 15:58:53] [ERROR] Mailer: smtp_pass vacío. Configura el App Password de Gmail en config/app.php → mail → smtp_pass
+[2026-06-02 16:28:23] [ERROR] Mailer PHPMailer error para jeimygo666@gmail.com: SMTP Error: Could not authenticate.
