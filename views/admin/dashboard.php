@@ -1,30 +1,109 @@
-<?php $pageTitle = 'Dashboard Admin'; ?>
-<h2 class="fw-bold mb-4"><i class="fa fa-tachometer-alt text-warning me-2"></i>Panel de Administración</h2>
-<div class="row g-4 mb-5">
-  <div class="col-6 col-md-3"><div class="card bg-primary text-white shadow"><div class="card-body"><div class="d-flex justify-content-between align-items-center"><div><h3 class="fw-bold"><?=number_format($stats['usuarios'])?></h3><small>Usuarios</small></div><i class="fa fa-users fa-2x opacity-50"></i></div></div></div></div>
-  <div class="col-6 col-md-3"><div class="card bg-success text-white shadow"><div class="card-body"><div class="d-flex justify-content-between align-items-center"><div><h3 class="fw-bold"><?=number_format($stats['obras'])?></h3><small>Obras</small></div><i class="fa fa-images fa-2x opacity-50"></i></div></div></div></div>
-  <div class="col-6 col-md-3"><div class="card bg-warning text-white shadow"><div class="card-body"><div class="d-flex justify-content-between align-items-center"><div><h3 class="fw-bold"><?=number_format($stats['artistas'])?></h3><small>Artistas</small></div><i class="fa fa-palette fa-2x opacity-50"></i></div></div></div></div>
-  <div class="col-6 col-md-3"><div class="card bg-danger text-white shadow"><div class="card-body"><div class="d-flex justify-content-between align-items-center"><div><h3 class="fw-bold"><?= money($stats['ventas']) ?></h3><small>Ventas</small></div><i class="fa fa-dollar-sign fa-2x opacity-50"></i></div></div></div></div>
+<?php $pageTitle = 'Dashboard'; ?>
+
+<div style="
+background:lime;
+color:black;
+padding:10px;
+margin-bottom:20px;
+">
+DASHBOARD FUNCIONANDO
 </div>
-<div class="row g-4">
-  <div class="col-md-6">
-    <div class="card shadow"><div class="card-header fw-bold"><i class="fa fa-chart-line me-2"></i>Acciones Rápidas</div>
-    <div class="card-body d-grid gap-2">
-      <a href="<?=url('admin/usuarios')?>" class="btn btn-outline-primary"><i class="fa fa-users me-2"></i>Gestionar Usuarios</a>
-      <a href="<?=url('admin/bitacora')?>" class="btn btn-outline-secondary"><i class="fa fa-list-alt me-2"></i>Ver Bitácora</a>
-      <a href="<?=url('reporte/bitacora/pdf')?>" class="btn btn-outline-danger" target="_blank"><i class="fa fa-file-pdf me-2"></i>Bitácora en PDF</a>
-      <a href="<?=url('reporte/compras/excel')?>" class="btn btn-outline-success" target="_blank"><i class="fa fa-file-excel me-2"></i>Compras en Excel</a>
-      <a href="<?=url('reporte/estadisticas/pdf')?>" class="btn btn-outline-warning" target="_blank"><i class="fa fa-chart-bar me-2"></i>Estadísticas PDF</a>
-    </div></div>
+
+<!-- Tarjetas de stats -->
+<div class="row g-3 mb-4">
+  <?php
+  $cards = [
+    ['label'=>'Usuarios',    'value'=>$stats['usuarios'],           'icon'=>'fa-users',      'color'=>'var(--gold-light)'],
+    ['label'=>'Obras',       'value'=>$stats['obras'],              'icon'=>'fa-image',      'color'=>'var(--teal)'],
+    ['label'=>'Artistas',    'value'=>$stats['artistas'],           'icon'=>'fa-palette',    'color'=>'#a78bfa'],
+    ['label'=>'Subastas',    'value'=>$stats['subastas'],           'icon'=>'fa-gavel',      'color'=>'#f59e0b'],
+    ['label'=>'Comentarios', 'value'=>$stats['comentarios'],        'icon'=>'fa-comments',   'color'=>'#34d399'],
+    ['label'=>'Ventas $',    'value'=>'$'.number_format($stats['ventas'],2), 'icon'=>'fa-dollar-sign','color'=>'#f87171'],
+  ];
+  foreach($cards as $c): ?>
+  <div class="col-6 col-md-4 col-lg-2">
+    <div class="card-magic p-3 text-center h-100">
+      <i class="fa <?= $c['icon'] ?> fa-2x mb-2" style="color:<?= $c['color'] ?>"></i>
+      <div style="font-size:1.4rem;font-weight:700;color:var(--pearl)"><?= $c['value'] ?></div>
+      <div style="font-size:.75rem;color:var(--pearl-muted)"><?= $c['label'] ?></div>
+    </div>
   </div>
-  <div class="col-md-6">
-    <div class="card shadow"><div class="card-header fw-bold"><i class="fa fa-info-circle me-2"></i>Resumen</div>
-    <div class="card-body">
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item d-flex justify-content-between"><span>Subastas activas</span><strong><?=number_format($stats['subastas'])?></strong></li>
-        <li class="list-group-item d-flex justify-content-between"><span>Comentarios</span><strong><?=number_format($stats['comentarios'])?></strong></li>
-        <li class="list-group-item d-flex justify-content-between"><span>Artistas verificados</span><strong><?=number_format($stats['artistas'])?></strong></li>
-      </ul>
-    </div></div>
+  <?php endforeach; ?>
+</div>
+
+<!-- Accesos rápidos -->
+<div class="card-magic p-4 mb-4">
+  <h6 class="font-cinzel mb-3" style="color:var(--gold-light)">Accesos rápidos</h6>
+  <div class="d-flex flex-wrap gap-2">
+    <a href="<?= url('admin/usuarios') ?>"        class="btn btn-sm btn-outline-magic"><i class="fa fa-users me-1"></i>Usuarios</a>
+    <a href="<?= url('admin/gestion-obras') ?>"   class="btn btn-sm btn-outline-magic"><i class="fa fa-image me-1"></i>Obras</a>
+    <a href="<?= url('admin/gestion-artistas') ?>" class="btn btn-sm btn-outline-magic"><i class="fa fa-palette me-1"></i>Artistas</a>
+    <a href="<?= url('admin/gestion-subastas') ?>" class="btn btn-sm btn-outline-magic"><i class="fa fa-gavel me-1"></i>Subastas</a>
+    <a href="<?= url('admin/gestion-roles') ?>"   class="btn btn-sm btn-outline-magic"><i class="fa fa-shield me-1"></i>Roles</a>
+    <a href="<?= url('admin/bitacora') ?>"         class="btn btn-sm btn-outline-magic"><i class="fa fa-scroll me-1"></i>Bitácora</a>
+    <a href="<?= url('admin/respaldos') ?>"        class="btn btn-sm btn-outline-magic"><i class="fa fa-database me-1"></i>Respaldos</a>
+    <a href="<?= url('admin/configuracion') ?>"    class="btn btn-sm btn-outline-magic"><i class="fa fa-gear me-1"></i>Config</a>
+  </div>
+</div>
+
+<div class="row g-3">
+  <!-- Obras pendientes -->
+  <div class="col-md-4">
+    <div class="card-magic p-3 h-100">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h6 class="font-cinzel mb-0" style="color:var(--gold-light)">Obras pendientes</h6>
+        <a href="<?= url('admin/gestion-obras') ?>" class="btn btn-sm btn-outline-magic" style="font-size:.72rem">Ver todas</a>
+      </div>
+      <?php if(empty($obrasPendientes)): ?>
+        <p style="color:var(--pearl-muted);font-size:.85rem">Sin obras pendientes ✓</p>
+      <?php else: foreach($obrasPendientes as $o): ?>
+        <div class="mb-2 pb-2" style="border-bottom:1px solid var(--border)">
+          <div style="font-size:.85rem;color:var(--pearl)"><?= e($o['titulo']) ?></div>
+          <div style="font-size:.75rem;color:var(--pearl-muted)"><?= e($o['artista']) ?> · <?= format_date($o['creado_en']) ?></div>
+        </div>
+      <?php endforeach; endif; ?>
+    </div>
+  </div>
+
+  <!-- Últimos usuarios -->
+  <div class="col-md-4">
+    <div class="card-magic p-3 h-100">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h6 class="font-cinzel mb-0" style="color:var(--gold-light)">Últimos registros</h6>
+        <a href="<?= url('admin/usuarios') ?>" class="btn btn-sm btn-outline-magic" style="font-size:.72rem">Ver todos</a>
+      </div>
+      <?php if(empty($ultimosUsuarios)): ?>
+        <p style="color:var(--pearl-muted);font-size:.85rem">Sin registros.</p>
+      <?php else: foreach($ultimosUsuarios as $u): ?>
+        <div class="mb-2 pb-2" style="border-bottom:1px solid var(--border)">
+          <div style="font-size:.85rem;color:var(--pearl)"><?= e($u['nombre']) ?></div>
+          <div style="font-size:.75rem;color:var(--pearl-muted)">
+            <span style="color:var(--teal)"><?= e($u['rol']) ?></span>
+            · <?= format_date($u['creado_en']) ?>
+          </div>
+        </div>
+      <?php endforeach; endif; ?>
+    </div>
+  </div>
+
+  <!-- Últimos logs -->
+  <div class="col-md-4">
+    <div class="card-magic p-3 h-100">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h6 class="font-cinzel mb-0" style="color:var(--gold-light)">Actividad reciente</h6>
+        <a href="<?= url('admin/bitacora') ?>" class="btn btn-sm btn-outline-magic" style="font-size:.72rem">Ver todo</a>
+      </div>
+      <?php if(empty($ultimosLogs)): ?>
+        <p style="color:var(--pearl-muted);font-size:.85rem">Sin registros.</p>
+      <?php else: foreach($ultimosLogs as $l): ?>
+        <div class="mb-2 pb-2" style="border-bottom:1px solid var(--border)">
+          <div style="font-size:.75rem">
+            <span class="badge-magic" style="font-size:.65rem"><?= e($l['accion']) ?></span>
+            <span style="color:var(--pearl-muted)"> <?= e($l['nombre'] ?? 'Sistema') ?></span>
+          </div>
+          <div style="font-size:.7rem;color:var(--pearl-muted)"><?= format_date($l['creado_en']) ?></div>
+        </div>
+      <?php endforeach; endif; ?>
+    </div>
   </div>
 </div>
