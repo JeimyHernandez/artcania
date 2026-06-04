@@ -28,7 +28,7 @@
   --card-bg:     rgba(22,19,46,.85);
   --sidebar-w:   240px;
 }
-
+/*agregando cambios en main.css para login/registro*/
 /* Botón volver al inicio */
 .auth-back-home{
     color:rgb(113, 23, 116);
