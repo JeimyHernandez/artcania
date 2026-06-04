@@ -92,4 +92,36 @@ $(function () {
     }
   });
 
-}); 
+});  // ── Select2 global init ───────────────────────────────────────
+  // Se ejecuta en DOMContentLoaded y también expone artSelect2()
+  // para llamadas manuales después de renderizado dinámico.
+  function artSelect2(ctx) {
+    var $ctx = ctx ? $(ctx) : $(document);
+    $ctx.find('select:not(.no-select2):not(.select2-hidden-accessible)').each(function () {
+      var $sel  = $(this);
+      var ph    = $sel.data('placeholder') || $sel.attr('placeholder') || 'Seleccionar…';
+      var allow = $sel.prop('multiple') ? true : !!$sel.data('allow-clear');
+
+      $sel.select2({
+        theme        : 'artcania',
+        placeholder  : ph,
+        allowClear   : allow,
+        width        : '100%',
+        language     : {
+          noResults : function () { return 'Sin resultados'; },
+          searching  : function () { return 'Buscando…'; }
+        }
+      });
+    });
+  }
+
+  // Init automático al cargar la página
+  if (typeof $.fn.select2 === 'function') {
+    artSelect2();
+  } else {
+    // Select2 no cargado aún: esperar al evento custom o al load
+    $(window).on('select2:ready', function () { artSelect2(); });
+  }
+
+  // Exponer globalmente para vistas que generan selects dinámicos
+  window.artSelect2 = artSelect2;

@@ -1,5 +1,39 @@
-/* Artist panel */
-.sidebar { background: #0d1b2a !important; }
-.sidebar .nav-link { border-radius: 8px; font-size: .88rem; transition: all .2s; }
-.sidebar .nav-link:hover { background: rgba(255,255,255,.1); }
-.card { border-radius: 12px; border: none; }
+/* Artista-specific styles */
+.obra-card-mini {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  transition: all .3s;
+}
+.obra-card-mini:hover {
+  border-color: var(--purple-mid);
+  box-shadow: 0 6px 25px rgba(124,58,237,.2);
+  transform: translateY(-2px);
+}
+.obra-card-mini img {
+  width: 100%; height: 140px; object-fit: cover;
+}
+.obra-card-mini .card-body { padding: .85rem; }
+
+/* Upload zone */
+.upload-zone {
+  border: 2px dashed var(--border);
+  border-radius: 16px;
+  padding: 3rem 2rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all .3s;
+  background: rgba(124,58,237,.04);
+}
+.upload-zone:hover, .upload-zone.dragover {
+  border-color: var(--purple-mid);
+  background: var(--purple-soft);
+  box-shadow: 0 0 30px var(--purple-soft);
+}
+.upload-zone i {
+  font-size: 3rem;
+  color: var(--purple-mid);
+  margin-bottom: 1rem;
+  display: block;
+}

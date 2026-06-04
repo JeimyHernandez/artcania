@@ -1,22 +1,147 @@
-[2026-05-23 15:48:11] [REGISTRO] user=7 Nuevo usuario: noreplyartcania@gmail.com
-[2026-05-24 00:21:21] [INFO] Mailer: correo enviado a jeimygo666@gmail.com — ✅ Test Artcania OAuth Mail
-[2026-05-23 16:42:01] [INFO] Mailer: correo enviado a noreplyartcania@gmail.com — Verifica tu cuenta en Artcania
-[2026-05-23 16:42:01] [REENVIO_VERIFICACION] user=7 noreplyartcania@gmail.com
-[2026-05-23 17:09:16] [INFO] Mailer: correo enviado a noreplyartcania@gmail.com — Verifica tu cuenta en Artcania
-[2026-05-23 17:09:16] [REENVIO_VERIFICACION] user=7 noreplyartcania@gmail.com
-[2026-05-23 19:38:06] [INFO] Mailer: correo enviado a noreplyartcania@gmail.com — Verifica tu cuenta en Artcania
-[2026-05-23 19:38:06] [REENVIO_VERIFICACION] user=7 noreplyartcania@gmail.com
-[2026-05-23 19:38:27] [LOGIN] user=7 Login desde IP: ::1
-[2026-05-23 20:11:51] [LOGOUT] user=7 Cierre de sesión
-[2026-05-23 20:13:11] [INFO] Mailer: correo enviado a jeimygo666@gmail.com — Verifica tu cuenta en Artcania
-[2026-05-23 20:13:11] [REGISTRO] user=8 Nuevo usuario: jeimygo666@gmail.com
-[2026-05-23 20:13:48] [LOGIN] user=8 Login desde IP: ::1
-[2026-05-23 22:13:48] [LOGOUT] user=8 Cierre de sesión
-[2026-05-23 22:15:07] [LOGIN] user=9 Login desde IP: ::1
-[2026-05-23 22:53:47] [LOGOUT] user=9 Cierre de sesión
-[2026-05-23 22:56:05] [INFO] Mailer: correo enviado a alissawa01@gmail.com — Verifica tu cuenta en Artcania
-[2026-05-23 22:56:05] [REGISTRO] user=10 Nuevo usuario: alissawa01@gmail.com
-[2026-05-23 22:58:29] [INFO] Mailer: correo enviado a alissawa03@gmail.com — Verifica tu cuenta en Artcania
-[2026-05-23 22:58:29] [REGISTRO] user=11 Nuevo usuario: alissawa03@gmail.com
-[2026-05-23 23:00:34] [LOGIN] user=11 Login desde IP: ::1
-[2026-05-23 23:01:21] [OBRA_CREADA] user=11 Obra ID 11
+[2026-05-30 20:45:04] [LOGIN] user=40 Login desde IP: ::1
+[2026-05-31 08:04:03] [LOGIN] user=40 Login desde IP: ::1
+[2026-05-31 12:11:30] [LOGIN] user=40 Login desde IP: ::1
+[2026-05-31 12:25:47] [LOGIN] user=40 Login desde IP: ::1
+[2026-05-31 12:32:21] [LOGIN] user=40 Login desde IP: ::1
+[2026-05-31 12:37:12] [LOGIN] user=40 Login desde IP: ::1
+[2026-05-31 13:21:58] [LOGIN] user=40 Login desde IP: ::1
+[2026-05-31 13:51:04] [LOGIN] user=40 Login desde IP: ::1
+[2026-05-31 14:05:24] [LOGIN] user=40 Login desde IP: ::1
+[2026-06-01 16:46:49] [LOGIN] user=34 Login desde IP: ::1
+[2026-06-01 16:51:36] [LOGIN] user=34 Login desde IP: ::1
+[2026-06-01 17:20:35] [ROL_CAMBIO] user=34 User 1 -> usuario
+[2026-06-01 17:40:44] [RESPALDO_CREADO] user=34 Respaldo: backup_20260601_174044_bd_solo
+[2026-06-01 17:42:38] [LOGOUT] user=34 Cierre de sesión
+[2026-06-01 17:42:43] [LOGIN] user=34 Login desde IP: ::1
+[2026-06-01 17:55:14] [ROL_CAMBIO] user=34 User 1 -> curador
+[2026-06-01 18:02:16] [ROL_CAMBIO] user=34 User 1 -> curador
+[2026-06-01 18:03:00] [LOGIN] user=34 Login desde IP: ::1
+[2026-06-01 18:04:13] [ROL_CAMBIO] user=34 User 1 -> curador
+[2026-06-01 18:12:16] [ROL_CAMBIO] user=34 User 1 -> curador
+[2026-06-01 18:12:53] [LOGIN] user=34 Login desde IP: ::1
+[2026-06-01 18:13:17] [ROL_CAMBIO] user=34 User 1 -> curador
+[2026-06-01 18:15:55] [ROL_CAMBIO] user=13 User 33 -> usuario
+[2026-06-01 18:48:44] [LOGIN] user=34 Login desde IP: ::1
+[2026-06-01 21:46:37] [LOGIN] user=34 Login desde IP: ::1
+[2026-06-02 04:19:58] [REGISTRO] user=36 Nuevo usuario: jeimygo666@gmail.com
+[2026-06-02 04:21:28] [LOGIN] user=34 Login desde IP: ::1
+[2026-06-02 05:26:38] [LOGIN] user=34 Login desde IP: ::1
+[2026-06-02 05:27:06] [LOGIN] user=34 Login desde IP: ::1
+[2026-06-02 10:43:51] [LOGIN] user=34 Login desde IP: ::1
+[2026-06-02 10:54:02] [LOGIN] user=34 Login desde IP: ::1
+[2026-06-02 12:13:27] [LOGIN] user=34 Login desde IP: ::1
+[2026-06-02 12:14:02] [LOGIN] user=34 Login desde IP: ::1
+[2026-06-02 12:36:01] [ROL_CAMBIO] user=34 User 1 -> curador
+[2026-06-02 12:47:27] [ROL_CAMBIO] user=34 User 1 -> curador
+[2026-06-02 12:47:28] [ROL_CAMBIO] user=34 User 1 -> curador
+[2026-06-02 12:47:40] [ROL_CAMBIO] user=34 User 1 -> admin
+[2026-06-02 13:10:16] [ROL_CAMBIO] user=34 User 1 -> admin
+[2026-06-02 13:10:28] [ROL_CAMBIO] user=34 User 1 -> curador
+[2026-06-02 13:20:36] [ROL_CAMBIO] user=34 User 1 -> curador
+[2026-06-02 13:21:04] [LOGIN] user=34 Login desde IP: ::1
+[2026-06-02 13:30:42] [ROL_CAMBIO] user=34 User 1 -> admin
+[2026-06-02 15:58:53] [REGISTRO] user=35 Nuevo usuario: jeimygo666@gmail.com
+[2026-06-02 16:28:23] [REENVIO_VERIFICACION] user=35 jeimygo666@gmail.com
+[2026-06-02 16:38:12] [INFO] Mailer [OAuth2]: correo enviado a jeimygo666@gmail.com — Asunto: Verifica tu cuenta en Artcania
+[2026-06-02 16:38:12] [REENVIO_VERIFICACION] user=35 jeimygo666@gmail.com
+[2026-06-02 16:38:27] [LOGIN] user=35 Login desde IP: ::1
+[2026-06-02 16:40:51] [PERFIL_ACTUALIZADO] user=35 Perfil actualizado
+[2026-06-02 17:04:00] [LOGOUT] user=35 Cierre de sesión
+[2026-06-02 17:07:20] [LOGIN] user=35 Login desde IP: ::1
+[2026-06-02 17:07:52] [PERFIL_ACTUALIZADO] user=35 Perfil actualizado
+[2026-06-02 17:09:33] [LOGOUT] user=34 Cierre de sesión
+[2026-06-02 17:34:27] [LOGOUT] user=35 Cierre de sesión
+[2026-06-02 17:34:43] [LOGIN] user=35 Login desde IP: ::1
+[2026-06-02 18:14:30] [LOGIN] user=35 Login desde IP: ::1
+[2026-06-02 19:12:24] [LOGIN] user=34 Login desde IP: ::1
+[2026-06-02 19:14:17] [LOGIN] user=35 Login desde IP: ::1
+[2026-06-02 19:14:30] [PERFIL_ACTUALIZADO] user=35 Perfil actualizado
+[2026-06-02 20:05:53] [LOGIN] user=35 Login desde IP: ::1
+[2026-06-02 22:29:37] [LOGIN] user=35 Login desde IP: ::1
+[2026-06-02 22:31:35] [LOGOUT] user=35 Cierre de sesión
+[2026-06-02 22:31:47] [LOGIN] user=34 Login desde IP: ::1
+[2026-06-02 22:32:26] [ROL_CAMBIO] user=34 User 35 -> artista
+[2026-06-02 22:42:33] [LOGIN] user=34 Login desde IP: ::1
+[2026-06-02 22:43:56] [EXPO_CREAR] user=34 Expo 1: GATOS
+[2026-06-02 22:46:04] [RESPALDO_CREADO] user=34 Respaldo: backup_20260602_224604_completo
+[2026-06-02 22:47:18] [LOGOUT] user=34 Cierre de sesión
+[2026-06-02 22:47:57] [LOGOUT] user=34 Cierre de sesión
+[2026-06-02 22:48:03] [LOGIN] user=35 Login desde IP: ::1
+[2026-06-02 23:04:18] [INFO] Mailer [OAuth2]: correo enviado a alissawa03@gmail.com — Asunto: Verifica tu cuenta en Artcania
+[2026-06-02 23:04:18] [REGISTRO] user=36 Nuevo usuario: alissawa03@gmail.com
+[2026-06-02 23:04:59] [LOGIN] user=36 Login desde IP: ::1
+[2026-06-02 23:11:28] [LOGOUT] user=36 Cierre de sesión
+[2026-06-02 23:11:31] [LOGIN] user=34 Login desde IP: ::1
+[2026-06-02 23:11:55] [EXPO_APROBAR] user=34 Expo 1
+[2026-06-02 23:47:43] [ROL_CAMBIO] user=34 User 36 -> curador
+[2026-06-02 23:48:12] [LOGOUT] user=35 Cierre de sesión
+[2026-06-02 23:50:37] [LOGIN] user=36 Login desde IP: ::1
+[2026-06-03 00:25:31] [LOGOUT] user=34 Cierre de sesión
+[2026-06-03 00:25:48] [LOGIN] user=36 Login desde IP: ::1
+[2026-06-03 07:13:45] [LOGIN] user=35 Login desde IP: ::1
+[2026-06-03 07:23:34] [LOGIN] user=36 Login desde IP: ::1
+[2026-06-03 08:13:07] [OBRA_CREADA] user=35 Obra ID 370
+[2026-06-03 08:28:34] [PERFIL_ARTISTA] user=35 Perfil de artista actualizado
+[2026-06-03 11:24:32] [OBRA_VALIDADA] user=36 Obra 370 -> aprobada
+[2026-06-03 11:25:44] [SOLICITUD_SUBASTA] user=35 Solicitud #1 obra=370
+[2026-06-03 11:26:19] [SOLICITUD_SUBASTA_APROBADA] user=36 Solicitud #1 → Subasta #1
+[2026-06-03 11:29:18] [SUBASTA_APROBAR] user=36 Subasta 1
+[2026-06-03 12:36:40] [LOGIN] user=34 Login desde IP: ::1
+[2026-06-03 17:44:02] [LOGIN] user=34 Login desde IP: ::1
+[2026-06-03 18:17:23] [LOGOUT] user=34 Cierre de sesión
+[2026-06-03 18:32:46] [LOGIN] user=34 Login desde IP: ::1
+[2026-06-03 18:35:32] [LOGIN] user=35 Login desde IP: ::1
+[2026-06-03 19:59:31] [LOGIN] user=34 Login desde IP: ::1
+[2026-06-03 20:00:01] [RESPALDO_CREADO] user=34 Respaldo: backup_20260603_200001_completo
+[2026-06-03 20:42:27] [LOGIN_FALLIDO] user=36 Intento desde IP: 127.0.0.1
+[2026-06-03 20:43:19] [LOGIN_FALLIDO] user=36 Intento desde IP: 127.0.0.1
+[2026-06-03 20:44:35] [INFO] Mailer [OAuth2]: correo enviado a alissawa03@gmail.com — Asunto: Restablece tu contraseña – Artcania
+[2026-06-03 20:46:10] [LOGOUT] user=35 Cierre de sesión
+[2026-06-03 20:46:57] [LOGIN] user=35 Login desde IP: ::1
+[2026-06-03 20:48:19] [OBRA_CREADA] user=35 Obra ID 371
+[2026-06-03 20:53:02] [LOGOUT] user=35 Cierre de sesión
+[2026-06-03 20:53:35] [LOGIN] user=36 Login desde IP: ::1
+[2026-06-03 20:56:04] [LOGOUT] user=36 Cierre de sesión
+[2026-06-03 20:56:46] [LOGIN_FALLIDO] user=34 Intento desde IP: ::1
+[2026-06-03 20:56:58] [LOGIN_GOOGLE] user=34 Login con Google
+[2026-06-03 20:57:47] [ROL_CAMBIO] user=34 User 36 -> usuario
+[2026-06-03 21:01:34] [RESPALDO_CREADO] user=34 Respaldo: backup_20260603_210133_bd_solo
+[2026-06-03 21:02:33] [LOGOUT] user=34 Cierre de sesión
+[2026-06-03 21:03:48] [INFO] Mailer [OAuth2]: correo enviado a witchessalem@gmail.com — Asunto: Verifica tu cuenta en Artcania
+[2026-06-03 21:03:48] [REGISTRO] user=37 Nuevo usuario: witchessalem@gmail.com
+[2026-06-03 21:05:49] [INFO] Mailer [OAuth2]: correo enviado a witchessalem3@gmail.com — Asunto: Verifica tu cuenta en Artcania
+[2026-06-03 21:05:49] [REGISTRO] user=38 Nuevo usuario: witchessalem3@gmail.com
+[2026-06-03 21:07:02] [LOGIN] user=38 Login desde IP: ::1
+[2026-06-03 21:07:22] [PERFIL_ACTUALIZADO] user=38 Perfil actualizado
+[2026-06-03 21:17:11] [LOGOUT] user=38 Cierre de sesión
+[2026-06-03 21:18:43] [INFO] Mailer [OAuth2]: correo enviado a hopemai753@gmail.com — Asunto: Verifica tu cuenta en Artcania
+[2026-06-03 21:18:43] [REGISTRO] user=39 Nuevo usuario: hopemai753@gmail.com
+[2026-06-03 21:41:48] [LOGIN] user=35 Login desde IP: ::1
+[2026-06-03 22:41:16] [LOGOUT] user=35 Cierre de sesión
+[2026-06-03 22:41:20] [LOGIN] user=34 Login desde IP: ::1
+[2026-06-03 22:41:32] [ADMIN_VERIFICAR_USUARIO] user=34 Verificación manual usuario ID 39
+[2026-06-03 22:41:38] [ADMIN_VERIFICAR_USUARIO] user=34 Verificación manual usuario ID 37
+[2026-06-03 22:42:12] [ROL_CAMBIO] user=34 User 38 -> curador
+[2026-06-04 04:26:32] [LOGIN] user=34 Login desde IP: ::1
+[2026-06-04 05:12:43] [LOGIN] user=36 Login desde IP: 127.0.0.1
+[2026-06-04 05:14:14] [LOGIN_FALLIDO] user=38 Intento desde IP: ::1
+[2026-06-04 05:15:02] [LOGIN] user=38 Login desde IP: ::1
+[2026-06-04 05:15:31] [OBRA_VALIDADA] user=38 Obra 371 -> aprobada
+[2026-06-04 05:20:22] [ROL_CAMBIO] user=34 User 1 -> usuario
+[2026-06-04 05:21:22] [PERFIL_ACTUALIZADO] user=34 Perfil actualizado
+[2026-06-04 05:38:13] [ROL_CAMBIO] user=34 User 1: usuario -> curador
+[2026-06-04 05:48:50] [ROL_CAMBIO] user=34 User 39: artista -> curador
+[2026-06-04 05:49:08] [ROL_CAMBIO] user=34 User 38: curador -> curador
+[2026-06-04 05:50:41] [CURADOR_ELIMINA_USUARIO] user=38 CURADOR ELIMINÓ usuario 'Alissa Hdz' (ID:36, rol:usuario, email:alissawa03@gmail.com) | Motivo: PORQUE SI
+[2026-06-04 05:57:13] [LOGIN] user=34 Login desde IP: ::1
+[2026-06-04 13:26:33] [ROL_CAMBIO] user=34 User 39: curador -> artista
+[2026-06-04 13:48:41] [LOGOUT] user=38 Cierre de sesión
+[2026-06-04 13:49:44] [LOGOUT] user=34 Cierre de sesión
+[2026-06-04 13:50:58] [INFO] Mailer [OAuth2]: correo enviado a hg23065@ucad.edu.sv — Asunto: Verifica tu cuenta en Artcania
+[2026-06-04 13:50:58] [REGISTRO] user=40 Nuevo usuario: hg23065@ucad.edu.sv
+[2026-06-04 13:51:59] [LOGIN] user=34 Login desde IP: ::1
+[2026-06-04 13:52:09] [LOGOUT] user=34 Cierre de sesión
+[2026-06-04 13:54:42] [INFO] Mailer [OAuth2]: correo enviado a alissawa03@gmail.com — Asunto: Verifica tu cuenta en Artcania
+[2026-06-04 13:54:42] [REGISTRO] user=41 Nuevo usuario: alissawa03@gmail.com
+[2026-06-04 13:55:21] [LOGIN] user=41 Login desde IP: 127.0.0.1
+[2026-06-04 13:58:45] [LOGIN] user=41 Login desde IP: 127.0.0.1
