@@ -1,4 +1,5 @@
 <?php $pageTitle = 'Recuperar contraseña'; ?>
+<!--cambios visuales para que concuerde con el estilo nuevo-->
 <div class="card-auth">
   <div class="card-header-magic">
     <span class="auth-logo-gem">🔑</span>
