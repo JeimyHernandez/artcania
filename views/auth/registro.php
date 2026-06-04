@@ -8,8 +8,8 @@
 
   <!-- =========================================================
        Encabezado visual del formulario de registro.
-       Presenta el logo institucional de Artcania junto
-       al nombre de la plataforma y su mensaje principal.
+       Presenta el logo de Artcania junto
+       al nombre de la plataforma y su eslogan.
   ========================================================= -->
   <div class="card-header-magic">
 
