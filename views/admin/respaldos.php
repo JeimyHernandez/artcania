@@ -1,43 +1,38 @@
-<?php $pageTitle = 'Respaldos'; ?>
-<h2 class="fw-bold mb-4"><i class="fa fa-database me-2"></i>Respaldos del Sistema</h2>
-<div class="row g-4">
-  <div class="col-md-5">
-    <div class="card shadow">
-      <div class="card-header fw-bold"><i class="fa fa-plus-circle me-2"></i>Crear Respaldo</div>
-      <div class="card-body">
-        <p class="text-muted small">Genera un respaldo de la base de datos. Los respaldos se guardan en el servidor.</p>
-        <form method="POST" action="<?= url('admin/respaldo/crear') ?>">
-          <?= csrf_field() ?>
-          <div class="mb-3">
-            <label class="form-label fw-semibold">Tipo</label>
-            <select name="tipo" class="form-select">
-              <option value="bd_solo">Solo Base de Datos</option>
-              <option value="completo">Completo (BD + Media)</option>
-            </select>
-          </div>
-          <button type="submit" class="btn btn-danger w-100"><i class="fa fa-download me-2"></i>Generar Respaldo</button>
-        </form>
-      </div>
-    </div>
-  </div>
-  <div class="col-md-7">
-    <div class="card shadow">
-      <div class="card-header fw-bold"><i class="fa fa-history me-2"></i>Historial de Respaldos</div>
-      <div class="card-body">
-        <?php if(!isset($respaldos)) $respaldos = []; ?>
+<?php $pageTitle = 'Respaldos del Sistema'; ?>
+<div class="d-flex align-items-center justify-content-between mb-4 flex-wrap gap-2">
+  <h4 class="font-cinzel mb-0" style="color:var(--gold-light)"><i class="fa fa-database me-2"></i>Respaldos del Sistema</h4>
+  <form method="POST" action="<?= url('admin/respaldo/crear') ?>" class="d-inline">
+    <?= csrf_field() ?>
+    <select name="tipo" class="form-select form-select-sm d-inline-block" style="width:auto;background:var(--card-bg);color:var(--pearl);border:1px solid var(--border)">
+      <option value="bd_solo">Solo BD</option>
+      <option value="completo">Completo</option>
+      <option value="archivos">Solo Archivos</option>
+    </select>
+    <button type="submit" class="btn btn-magic btn-sm ms-2">
+      <i class="fa fa-plus me-1"></i>Crear Respaldo
+    </button>
+  </form>
+</div>
+
+<div class="card-magic p-0">
+  <div class="table-responsive">
+    <table class="artcania-table w-100">
+      <thead>
+        <tr><th>#</th><th>Nombre</th><th>Tipo</th><th>Creado por</th><th>Fecha</th></tr>
+      </thead>
+      <tbody>
         <?php if(empty($respaldos)): ?>
-        <p class="text-muted">No hay respaldos registrados.</p>
-        <?php else: ?>
-        <ul class="list-group list-group-flush">
-          <?php foreach($respaldos as $r): ?>
-          <li class="list-group-item d-flex justify-content-between">
-            <div><strong><?= e($r['nombre']) ?></strong><br><small class="text-muted"><?= format_date($r['creado_en']) ?></small></div>
-            <span class="badge bg-secondary align-self-center"><?= e($r['tipo']) ?></span>
-          </li>
-          <?php endforeach; ?>
-        </ul>
-        <?php endif; ?>
-      </div>
-    </div>
+          <tr><td colspan="5" class="text-center py-4" style="color:var(--pearl-muted)">No hay respaldos registrados.</td></tr>
+        <?php else: foreach($respaldos as $r): ?>
+          <tr>
+            <td><?= e($r['id']) ?></td>
+            <td style="font-size:.85rem"><?= e($r['nombre']) ?></td>
+            <td><span class="badge-magic" style="font-size:.72rem"><?= e($r['tipo']) ?></span></td>
+            <td><?= e($r['creado_por'] ?? '—') ?></td>
+            <td style="font-size:.8rem;white-space:nowrap"><?= format_date($r['creado_en'] ?? '') ?></td>
+          </tr>
+        <?php endforeach; endif; ?>
+      </tbody>
+    </table>
   </div>
 </div>
