@@ -1,46 +1,93 @@
-<?php $pageTitle = 'Panel Curador'; ?>
-<h2 class="fw-bold mb-4"><i class="fa fa-eye me-2"></i>Panel del Curador</h2>
-<div class="row g-4">
-  <div class="col-md-6">
-    <div class="card shadow">
-      <div class="card-header fw-bold"><i class="fa fa-clock text-warning me-2"></i>Obras Pendientes (<?= count($pendientes) ?>)</div>
-      <div class="card-body p-0">
-        <?php foreach($pendientes as $o): ?>
-        <div class="border-bottom p-3">
-          <div class="d-flex gap-3">
-            <?php if($o['imagen_principal']): ?><img src="<?= media_url('Originales/imagen/Obras_digitales/'.$o['imagen_principal']) ?>" width="60" height="60" style="object-fit:cover;border-radius:6px"><?php endif; ?>
-            <div class="flex-grow-1">
-              <strong><?= e($o['titulo']) ?></strong>
-              <small class="d-block text-muted">por <?= e($o['artista_nombre']) ?> &middot; <?= format_date($o['creado_en'],'d/m/Y') ?></small>
-              <p class="small mb-2"><?= e(truncate($o['descripcion']??'',80)) ?></p>
-              <form method="POST" action="<?= url('curador/validar') ?>" class="d-flex gap-2 align-items-center">
-                <?= csrf_field() ?>
-                <input type="hidden" name="obra_id" value="<?= $o['id'] ?>">
-                <input type="text" name="nota" class="form-control form-control-sm" placeholder="Nota (opcional)">
-                <button name="estado" value="aprobada" class="btn btn-success btn-sm"><i class="fa fa-check"></i> Aprobar</button>
-                <button name="estado" value="rechazada" class="btn btn-danger btn-sm"><i class="fa fa-times"></i> Rechazar</button>
-              </form>
-            </div>
-          </div>
-        </div>
-        <?php endforeach; ?>
-        <?php if(empty($pendientes)): ?><div class="p-4 text-center text-muted"><i class="fa fa-check-circle fa-2x text-success mb-2 d-block"></i>No hay obras pendientes</div><?php endif; ?>
-      </div>
+<?php $pageTitle = 'Dashboard Curador'; ?>
+<div class="mb-4">
+  <h1 class="fs-4 mb-1"><i class="fa fa-masks-theater me-2" style="color:var(--teal)"></i>Panel del Curador ✦</h1>
+  <p style="color:var(--pearl-muted);font-size:.85rem">Valida, cuida y da forma al universo artístico de Artcania</p>
+</div>
+
+<?php
+$pendientes  = isset($obras) ? array_filter($obras, fn($o)=>$o['estado']==='pendiente') : [];
+$aprobadas   = isset($obras) ? array_filter($obras, fn($o)=>$o['estado']==='aprobada')  : [];
+$rechazadas  = isset($obras) ? array_filter($obras, fn($o)=>$o['estado']==='rechazada') : [];
+?>
+<div class="row g-3 mb-4">
+  <div class="col-6 col-xl-3">
+    <div class="stat-card">
+      <div class="stat-icon purple"><i class="fa fa-hourglass-half"></i></div>
+      <div class="stat-value"><?= count($pendientes) ?></div>
+      <div class="stat-label">Pendientes</div>
     </div>
   </div>
-  <div class="col-md-6">
-    <div class="card shadow">
-      <div class="card-header fw-bold"><i class="fa fa-comments text-warning me-2"></i>Comentarios Pendientes (<?= count($comentarios) ?>)</div>
-      <div class="card-body p-0">
-        <?php foreach($comentarios as $c): ?>
-        <div class="border-bottom p-3">
-          <strong><?= e($c['nombre']) ?></strong> en <em><?= e($c['titulo']) ?></em>
-          <p class="small mb-1 mt-1"><?= e(truncate($c['contenido'],100)) ?></p>
-          <small class="text-muted"><?= format_date($c['creado_en']) ?></small>
+  <div class="col-6 col-xl-3">
+    <div class="stat-card">
+      <div class="stat-icon teal"><i class="fa fa-circle-check"></i></div>
+      <div class="stat-value"><?= count($aprobadas) ?></div>
+      <div class="stat-label">Aprobadas</div>
+    </div>
+  </div>
+  <div class="col-6 col-xl-3">
+    <div class="stat-card">
+      <div class="stat-icon pink"><i class="fa fa-circle-xmark"></i></div>
+      <div class="stat-value"><?= count($rechazadas) ?></div>
+      <div class="stat-label">Rechazadas</div>
+    </div>
+  </div>
+  <div class="col-6 col-xl-3">
+    <div class="stat-card">
+      <div class="stat-icon gold"><i class="fa fa-comments"></i></div>
+      <div class="stat-value"><?= count($comentarios ?? []) ?></div>
+      <div class="stat-label">Coms. Pendientes</div>
+    </div>
+  </div>
+</div>
+
+<div class="row g-3">
+  <div class="col-lg-6">
+    <div class="card-magic p-3">
+      <h6 class="font-cinzel mb-3" style="color:var(--gold-light)">✦ Acciones Rápidas</h6>
+      <?php $links = [
+        [url('curador/obras-pendientes'),'fa-hourglass-half','Revisar obras pendientes'],
+        [url('curador/historial'), 'fa-history',  'Historial de validaciones'],
+        [url('curador/moderar-comentarios'),'fa-comments',   'Moderar comentarios'],
+        [url('curador/destacados'),      'fa-star',          'Seleccionar destacados'],
+        [url('curador/exposiciones'),    'fa-landmark',      'Gestionar exposiciones'],
+        [url('curador/metricas'),        'fa-chart-bar',     'Ver métricas'],
+      ];
+      foreach($links as $l): ?>
+      <a href="<?= $l[0] ?>" class="d-flex align-items-center gap-3 py-2 text-decoration-none"
+         style="color:var(--pearl-dim);border-bottom:1px solid var(--border)"
+         onmouseover="this.style.color='var(--pearl)'" onmouseout="this.style.color='var(--pearl-dim)'">
+        <i class="fa <?= $l[1] ?>" style="width:18px;text-align:center;color:var(--teal)"></i>
+        <span style="font-size:.875rem"><?= $l[2] ?></span>
+        <i class="fa fa-chevron-right ms-auto" style="font-size:.65rem;opacity:.4"></i>
+      </a>
+      <?php endforeach; ?>
+    </div>
+  </div>
+  <div class="col-lg-6">
+    <div class="card-magic p-3">
+      <div class="d-flex align-items-center justify-content-between mb-3">
+        <h6 class="font-cinzel mb-0" style="color:var(--gold-light)">✦ Obras Recientes</h6>
+        <a href="<?= url('curador/obras-pendientes') ?>" class="btn btn-sm btn-outline-magic">Ver todas</a>
+      </div>
+      <?php if(!empty($pendientes)): ?>
+        <?php foreach(array_slice($pendientes, 0, 4) as $o): ?>
+        <div class="d-flex align-items-center gap-3 pb-2 mb-2" style="border-bottom:1px solid var(--border)">
+          <div style="width:44px;height:44px;border-radius:8px;overflow:hidden;flex-shrink:0;background:var(--purple-soft)">
+            <?php if(!empty($o['imagen_principal'])): ?>
+              <img src="<?= media_url('Originales/imagen/Obras_digitales/'.$o['imagen_principal']) ?>"
+                   style="width:100%;height:100%;object-fit:cover" alt="">
+            <?php else: ?><div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center">🎨</div><?php endif; ?>
+          </div>
+          <div class="flex-grow-1 overflow-hidden">
+            <div style="font-size:.83rem;color:var(--pearl);white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><?= e($o['titulo']) ?></div>
+            <div style="font-size:.72rem;color:var(--pearl-muted)"><?= e($o['artista_nombre'] ?? '') ?></div>
+          </div>
+          <span class="badge-warning" style="font-size:.65rem">Pendiente</span>
         </div>
         <?php endforeach; ?>
-        <?php if(empty($comentarios)): ?><div class="p-4 text-center text-muted">No hay comentarios pendientes</div><?php endif; ?>
-      </div>
+      <?php else: ?>
+        <p style="color:var(--pearl-muted);font-size:.85rem">Sin obras pendientes ✓</p>
+      <?php endif; ?>
     </div>
   </div>
 </div>

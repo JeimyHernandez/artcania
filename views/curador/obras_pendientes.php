@@ -1,43 +1,61 @@
 <?php $pageTitle = 'Obras Pendientes'; ?>
-<h2 class="fw-bold mb-4"><i class="fa fa-clock text-warning me-2"></i>Obras Pendientes de Revisión</h2>
-<?php if(!isset($pendientes)) $pendientes = []; ?>
-<div class="row g-4">
+<div class="d-flex align-items-center justify-content-between mb-4">
+  <h2 class="fs-5 font-cinzel mb-0" style="color:var(--gold-light)">✦ Obras Pendientes</h2>
+  <span class="badge-gold"><?= count($pendientes ?? []) ?> pendientes</span>
+</div>
+
+<?php if(!empty($pendientes)): ?>
+<div class="row g-3">
   <?php foreach($pendientes as $o): ?>
-  <div class="col-md-6">
-    <div class="card shadow h-100">
-      <div class="row g-0">
-        <div class="col-4">
-          <?php if($o['imagen_principal']): ?>
-          <img src="<?= media_url('Originales/imagen/Obras_digitales/'.$o['imagen_principal']) ?>" class="img-fluid rounded-start h-100" style="object-fit:cover">
-          <?php else: ?>
-          <div class="bg-light h-100 d-flex align-items-center justify-content-center"><i class="fa fa-image fa-2x text-muted"></i></div>
-          <?php endif; ?>
+  <div class="col-md-6 col-xl-4">
+    <div class="obra-validation-card">
+      <?php if(!empty($o['imagen_principal'])): ?>
+        <img src="<?= media_url('Originales/imagen/Obras_digitales/'.$o['imagen_principal']) ?>"
+             style="width:100%;height:180px;object-fit:cover"
+             alt="<?= e($o['titulo']) ?>"
+             onerror="this.src='<?= url('resources/img/placeholder.png') ?>'">
+      <?php else: ?>
+        <div style="height:180px;display:flex;align-items:center;justify-content:center;font-size:3rem;background:var(--purple-soft)">🎨</div>
+      <?php endif; ?>
+      <div class="p-3">
+        <div style="font-weight:600;color:var(--pearl);margin-bottom:.3rem"><?= e($o['titulo']) ?></div>
+        <div style="font-size:.78rem;color:var(--pearl-muted);margin-bottom:.5rem">
+          <i class="fa fa-user me-1" style="color:var(--purple-mid)"></i><?= e($o['artista_nombre'] ?? '') ?>
+          <span class="ms-2"><i class="fa fa-clock me-1" style="color:var(--gold)"></i><?= format_date($o['creado_en']) ?></span>
         </div>
-        <div class="col-8">
-          <div class="card-body">
-            <h6 class="fw-bold"><?= e($o['titulo']) ?></h6>
-            <small class="text-muted d-block mb-1">por <?= e($o['artista_nombre']) ?></small>
-            <small class="text-muted d-block mb-2"><?= format_date($o['creado_en']) ?></small>
-            <p class="small"><?= e(truncate($o['descripcion']??'',80)) ?></p>
-            <form method="POST" action="<?= url('curador/validar') ?>">
-              <?= csrf_field() ?>
-              <input type="hidden" name="obra_id" value="<?= $o['id'] ?>">
-              <input type="text" name="nota" class="form-control form-control-sm mb-2" placeholder="Nota para el artista...">
-              <div class="d-flex gap-2">
-                <button name="estado" value="aprobada" class="btn btn-success btn-sm flex-grow-1"><i class="fa fa-check me-1"></i>Aprobar</button>
-                <button name="estado" value="rechazada" class="btn btn-danger btn-sm flex-grow-1"><i class="fa fa-times me-1"></i>Rechazar</button>
-              </div>
-            </form>
+        <?php if(!empty($o['descripcion'])): ?>
+          <p style="font-size:.8rem;color:var(--pearl-muted);margin-bottom:.75rem;line-height:1.5">
+            <?= e(truncate($o['descripcion'],100)) ?>
+          </p>
+        <?php endif; ?>
+
+        <!-- Acciones validación -->
+        <form method="POST" action="<?= url('curador/validar') ?>">
+          <?= csrf_field() ?>
+          <input type="hidden" name="obra_id" value="<?= $o['id'] ?>">
+          <div class="mb-2">
+            <textarea name="nota" class="form-control" rows="2"
+                      placeholder="Nota para el artista (opcional)"
+                      style="font-size:.8rem;resize:none"></textarea>
           </div>
-        </div>
+          <div class="validation-actions">
+            <button type="submit" name="estado" value="aprobada" class="btn-approve flex-grow-1">
+              <i class="fa fa-circle-check me-1"></i>Aprobar
+            </button>
+            <button type="submit" name="estado" value="rechazada" class="btn-reject flex-grow-1">
+              <i class="fa fa-circle-xmark me-1"></i>Rechazar
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
   <?php endforeach; ?>
-  <?php if(empty($pendientes)): ?>
-  <div class="col-12 text-center py-5">
-    <i class="fa fa-check-circle fa-4x text-success mb-3 d-block"></i>
-    <h5>¡Todo al día! No hay obras pendientes.</h5>
-  </div>
-  <?php endif; ?>
 </div>
+<?php else: ?>
+<div class="text-center py-5" style="color:var(--pearl-muted)">
+  <i class="fa fa-circle-check fa-4x mb-3" style="color:rgba(74,222,128,.3);display:block"></i>
+  <h5 class="font-cinzel">¡Todo al día!</h5>
+  <p style="font-size:.85rem">No hay obras pendientes de validación</p>
+</div>
+<?php endif; ?>
