@@ -1,51 +1,64 @@
 <?php $pageTitle = 'Mis Obras'; ?>
-<div class="d-flex justify-content-between align-items-center mb-4">
-  <h2 class="fw-bold"><i class="fa fa-images me-2"></i>Mis Obras</h2>
-  <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalNuevaObra"><i class="fa fa-plus me-2"></i>Subir Obra</button>
+<div class="d-flex align-items-center justify-content-between mb-4">
+  <h2 class="fs-5 font-cinzel mb-0" style="color:var(--gold-light)">✦ Mis Obras</h2>
+  <a href="<?= url('artista/subir') ?>" class="btn btn-magic btn-sm">
+    <i class="fa fa-cloud-arrow-up me-1"></i>Nueva obra
+  </a>
 </div>
-<div class="row g-4">
-  <?php foreach($obras as $o): ?>
-  <div class="col-md-4 col-lg-3">
-    <div class="card h-100 shadow-sm">
-      <?php if($o['imagen_principal']): ?>
-      <img src="<?= media_url('Originales/imagen/Obras_digitales/'.$o['imagen_principal']) ?>" class="card-img-top" style="height:180px;object-fit:cover">
+
+<?php if(!empty($obras)): ?>
+<div class="row g-3">
+  <?php foreach($obras as $o):
+    $estadoMap = [
+      'aprobada'  => ['class'=>'badge-teal',   'label'=>'✓ Aprobada'],
+      'pendiente' => ['class'=>'badge-warning', 'label'=>'⏳ Pendiente'],
+      'rechazada' => ['class'=>'badge-danger',  'label'=>'✗ Rechazada'],
+    ];
+    $es = $estadoMap[$o['estado']] ?? ['class'=>'badge-magic','label'=>$o['estado']];
+  ?>
+  <div class="col-sm-6 col-md-4 col-xl-3">
+    <div class="obra-card-mini">
+      <?php if(!empty($o['imagen_principal'])): ?>
+        <img src="<?= media_url('Originales/imagen/Obras_digitales/'.$o['imagen_principal']) ?>"
+             alt="<?= e($o['titulo']) ?>"
+             onerror="this.src='<?= url('resources/img/placeholder.png') ?>'">
       <?php else: ?>
-      <div class="bg-light d-flex align-items-center justify-content-center" style="height:180px"><i class="fa fa-image fa-3x text-muted"></i></div>
+        <div style="height:140px;display:flex;align-items:center;justify-content:center;font-size:2.5rem;background:var(--purple-soft)">🎨</div>
       <?php endif; ?>
-      <div class="card-body p-2">
-        <h6 class="fw-bold small mb-1"><?= e(truncate($o['titulo'],30)) ?></h6>
-        <span class="badge bg-<?= $o['estado']==='aprobada'?'success':($o['estado']==='pendiente'?'warning':'danger') ?>"><?= e($o['estado']) ?></span>
-        <?php if($o['nota_curador']): ?><p class="small text-muted mt-1"><?= e(truncate($o['nota_curador'],50)) ?></p><?php endif; ?>
-        <a href="<?= url('artista/obras/'.$o['id'].'/editar') ?>" class="btn btn-sm btn-outline-secondary w-100 mt-2"><i class="fa fa-edit me-1"></i>Editar</a>
+      <div class="card-body">
+        <div class="d-flex align-items-start justify-content-between gap-1 mb-2">
+          <span style="font-size:.85rem;font-weight:600;color:var(--pearl)">
+            <?= e(truncate($o['titulo'],28)) ?>
+          </span>
+          <span class="<?= $es['class'] ?>" style="font-size:.65rem;white-space:nowrap"><?= $es['label'] ?></span>
+        </div>
+        <div class="d-flex align-items-center gap-3 mb-2" style="font-size:.75rem;color:var(--pearl-muted)">
+          <span><i class="fa fa-eye me-1" style="color:var(--teal)"></i><?= number_format($o['visualizaciones'] ?? 0) ?></span>
+          <?php if(!empty($o['precio'])): ?>
+            <span><i class="fa fa-tag me-1" style="color:var(--gold)"></i>$<?= number_format($o['precio'],0) ?></span>
+          <?php endif; ?>
+        </div>
+        <?php if(!empty($o['nota_curador'])): ?>
+          <div class="mb-2 p-2" style="background:rgba(248,113,113,.08);border:1px solid rgba(248,113,113,.2);border-radius:8px;font-size:.75rem;color:#fca5a5">
+            <i class="fa fa-comment me-1"></i><?= e(truncate($o['nota_curador'],50)) ?>
+          </div>
+        <?php endif; ?>
+        <a href="<?= url('artista/obras/'.$o['id'].'/editar') ?>"
+           class="btn btn-sm btn-outline-magic w-100" style="font-size:.75rem">
+          <i class="fa fa-pen-to-square me-1"></i>Editar
+        </a>
       </div>
     </div>
   </div>
   <?php endforeach; ?>
-  <?php if(empty($obras)): ?><div class="col-12 text-center py-5 text-muted"><i class="fa fa-image fa-3x mb-3 d-block"></i>No tienes obras aún. ¡Sube tu primera!</div><?php endif; ?>
 </div>
-
-<!-- Modal -->
-<div class="modal fade" id="modalNuevaObra" tabindex="-1">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header"><h5 class="modal-title fw-bold"><i class="fa fa-upload me-2"></i>Subir Nueva Obra</h5><button class="btn-close" data-bs-dismiss="modal"></button></div>
-      <form method="POST" action="<?= url('artista/obras') ?>" enctype="multipart/form-data">
-        <?= csrf_field() ?>
-        <div class="modal-body">
-          <div class="row g-3">
-            <div class="col-md-8"><label class="form-label fw-semibold">Título *</label><input type="text" name="titulo" class="form-control" required minlength="3"></div>
-            <div class="col-md-4"><label class="form-label fw-semibold">Precio</label><input type="number" name="precio" class="form-control" min="0" step="0.01" placeholder="Opcional"></div>
-            <div class="col-12"><label class="form-label fw-semibold">Descripción *</label><textarea name="descripcion" class="form-control" rows="3" required minlength="10"></textarea></div>
-            <div class="col-md-6"><label class="form-label fw-semibold">Técnica</label><input type="text" name="tecnica" class="form-control" placeholder="Óleo, acuarela, digital..."></div>
-            <div class="col-md-6"><label class="form-label fw-semibold">Dimensiones</label><input type="text" name="dimensiones" class="form-control" placeholder="p.ej. 80x60 cm"></div>
-            <div class="col-12"><label class="form-label fw-semibold">Imagen principal</label><input type="file" name="imagen" class="form-control" accept="image/*"></div>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-          <button type="submit" class="btn btn-primary"><i class="fa fa-upload me-2"></i>Subir para revisión</button>
-        </div>
-      </form>
-    </div>
-  </div>
+<?php else: ?>
+<div class="text-center py-5" style="color:var(--pearl-muted)">
+  <i class="fa fa-images fa-4x mb-3" style="opacity:.2;display:block"></i>
+  <h5 class="font-cinzel">Aún no has subido obras</h5>
+  <p style="font-size:.85rem">Comparte tu arte con el mundo mágico de Artcania</p>
+  <a href="<?= url('artista/subir') ?>" class="btn btn-magic px-4">
+    <i class="fa fa-cloud-arrow-up me-2"></i>Subir primera obra
+  </a>
 </div>
+<?php endif; ?>
