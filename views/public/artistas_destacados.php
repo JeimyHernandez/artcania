@@ -40,4 +40,3 @@
   </div>
   <?php endif; ?>
 </div>
-

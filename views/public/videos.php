@@ -7,4 +7,3 @@
     <a href="<?= url('galeria') ?>" class="btn btn-outline-magic btn-sm">Explorar galería</a>
   </div>
 </div>
-

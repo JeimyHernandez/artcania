@@ -1,4 +1,3 @@
-
 <?php $pageTitle = e($obra['titulo'] ?? 'Obra'); ?>
 <div class="container-xl py-4">
   <div class="row g-4">
@@ -19,10 +18,10 @@
         <div class="d-flex align-items-center gap-3 px-4 py-3"
              style="background:linear-gradient(to top,rgba(10,6,18,.9),transparent 0);position:absolute;bottom:0;left:0;right:0">
           <?php if(Auth::check()): ?>
-          <button class="fav-btn d-flex align-items-center gap-1 btn-sm"
+          <button class="fav-btn d-flex align-items-center gap-1 btn-sm <?= ($is_fav ?? false) ? 'active' : '' ?>"
                   data-id="<?= $obra['id'] ?>"
                   style="background:none;border:none;color:var(--pearl-dim);font-size:.85rem;cursor:pointer">
-            <i class="fa fa-heart me-1" style="font-size:1rem"></i>
+            <i class="fa-heart me-1 <?= ($is_fav ?? false) ? 'fa-solid' : 'fa-regular' ?>" style="font-size:1rem"></i>
             <span id="favCount"><?= $obra['favoritos'] ?? 0 ?></span>
           </button>
           <?php endif; ?>
@@ -150,7 +149,7 @@
 
         <!-- CTA contactar -->
         <?php if(Auth::check() && Auth::id() !== (int)($obra['artista_id'] ?? 0)): ?>
-          <a href="<?= url('chat') ?>" class="btn btn-magic w-100">
+          <a href="<?= url('chat/iniciar/'.$obra['artista_id']) ?>" class="btn btn-magic w-100">
             <i class="fa fa-paper-plane me-2"></i>Contactar artista
           </a>
         <?php elseif(!Auth::check()): ?>
@@ -187,5 +186,3 @@
   </div>
   <?php endif; ?>
 </div>
-
-

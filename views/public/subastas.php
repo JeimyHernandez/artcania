@@ -15,6 +15,8 @@
                class="card-img-top" style="height:200px;object-fit:cover"
                alt="<?= e($s['titulo'] ?? '') ?>"
                onerror="this.src='<?= url('resources/img/placeholder.png') ?>'">
+        <?php else: ?>
+          <div style="height:200px;display:flex;align-items:center;justify-content:center;font-size:3rem;background:var(--purple-soft)">🎨</div>
         <?php endif; ?>
         <div class="card-body">
           <h5 class="card-title mb-1"><?= e(truncate($s['titulo'] ?? 'Subasta', 35)) ?></h5>
@@ -32,27 +34,25 @@
             <div class="col-6 text-end">
               <div style="font-size:.7rem;color:var(--pearl-muted);text-transform:uppercase;letter-spacing:.08em">Cierra</div>
               <div style="font-size:.8rem;color:var(--gold);margin-top:.25rem">
-                <i class="fa fa-clock me-1"></i>
-                <?= format_date($s['fecha_fin'] ?? '') ?>
+                <i class="fa fa-clock me-1"></i><?= format_date($s['fecha_fin'] ?? '') ?>
               </div>
             </div>
           </div>
 
           <?php if(Auth::check()): ?>
-          <form class="pujar-form" data-id="<?= $s['id'] ?>">
-            <?= csrf_field() ?>
+          <div class="pujar-form" data-id="<?= $s['id'] ?>" data-csrf="<?= csrf_token() ?>">
             <div class="input-group input-group-sm mb-2">
               <span class="input-group-text">$</span>
               <input type="number" class="form-control monto-input"
                      placeholder="Tu oferta"
                      min="<?= ($s['precio_actual'] ?? $s['precio_inicial'] ?? 0) + 1 ?>"
                      step="0.01">
-              <button type="submit" class="btn btn-magic" style="padding:.3rem .9rem;font-size:.82rem">
+              <button type="button" class="btn btn-magic btn-pujar" style="padding:.3rem .9rem;font-size:.82rem">
                 <i class="fa fa-gavel me-1"></i>Pujar
               </button>
             </div>
             <div class="pujar-msg" style="font-size:.75rem;min-height:18px"></div>
-          </form>
+          </div>
           <?php else: ?>
           <a href="<?= url('login') ?>" class="btn btn-outline-magic btn-sm w-100">
             <i class="fa fa-gavel me-1"></i>Iniciar sesión para pujar
@@ -67,34 +67,54 @@
   <div class="text-center py-5" style="color:var(--pearl-muted)">
     <i class="fa fa-gavel fa-4x mb-3" style="opacity:.2;display:block"></i>
     <h5 class="font-cinzel">No hay subastas activas</h5>
+    <p style="font-size:.85rem">Vuelve pronto, se vienen nuevas subastas.</p>
+    <a href="<?= url('galeria') ?>" class="btn btn-outline-magic btn-sm mt-2">Explorar galería</a>
   </div>
   <?php endif; ?>
 </div>
 
 <script>
-$(document).on('submit', '.pujar-form', function(e){
-  e.preventDefault();
-  var form = $(this);
-  var id   = form.data('id');
-  var monto = form.find('.monto-input').val();
-  var csrf  = form.find('input[name="_csrf_token"]').val();
-  var msg   = form.find('.pujar-msg');
+window.addEventListener('DOMContentLoaded', function() {
+  document.addEventListener('click', function(e) {
+    var btn = e.target.closest('.btn-pujar');
+    if (!btn) return;
+    var box   = btn.closest('.pujar-form');
+    var id    = box.dataset.id;
+    var csrf  = box.dataset.csrf;
+    var input = box.querySelector('.monto-input');
+    var msg   = box.querySelector('.pujar-msg');
+    var monto = input.value;
 
-  fetch(BASE_URL + '/subasta/pujar', {
-    method: 'POST',
-    headers: {'Content-Type':'application/x-www-form-urlencoded','X-Requested-With':'XMLHttpRequest'},
-    body: '_csrf='+encodeURIComponent(csrf)+'&subasta_id='+id+'&monto='+monto
-  })
-  .then(r => r.json())
-  .then(d => {
-    if(d.ok){
-      msg.html('<span style="color:#4ade80"><i class="fa fa-check me-1"></i>¡Puja registrada!</span>');
-      form.find('.monto-input').val('');
-    } else {
-      msg.html('<span style="color:#f87171"><i class="fa fa-xmark me-1"></i>'+(d.error||'Error al pujar')+'</span>');
+    if (!monto || parseFloat(monto) <= 0) {
+      msg.innerHTML = '<span style="color:#f87171">Ingresa un monto válido.</span>';
+      return;
     }
-  })
-  .catch(()=> msg.html('<span style="color:#f87171">Error de conexión</span>'));
+
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fa fa-spinner fa-spin me-1"></i>';
+
+    fetch(BASE_URL + '/subasta/pujar', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'X-Requested-With': 'XMLHttpRequest' },
+      body: '_csrf=' + encodeURIComponent(csrf) + '&subasta_id=' + id + '&monto=' + monto
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(d) {
+      if (d.ok) {
+        msg.innerHTML = '<span style="color:#4ade80"><i class="fa fa-check me-1"></i>¡Puja registrada!</span>';
+        input.value = '';
+        input.min   = parseFloat(monto) + 1;
+      } else {
+        msg.innerHTML = '<span style="color:#f87171"><i class="fa fa-xmark me-1"></i>' + (d.error || 'Error al pujar') + '</span>';
+      }
+    })
+    .catch(function() {
+      msg.innerHTML = '<span style="color:#f87171">Error de conexión.</span>';
+    })
+    .finally(function() {
+      btn.disabled = false;
+      btn.innerHTML = '<i class="fa fa-gavel me-1"></i>Pujar';
+    });
+  });
 });
 </script>
-
