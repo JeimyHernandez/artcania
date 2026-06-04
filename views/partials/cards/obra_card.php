@@ -25,4 +25,3 @@
     <a href="<?= url('obra/'.$obra['id']) ?>" class="btn btn-sm btn-primary w-100">Ver Obra</a>
   </div>
 </div>
-

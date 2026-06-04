@@ -1,4 +1,3 @@
-
 <div class="modal fade" id="chatModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content" style="height:500px">

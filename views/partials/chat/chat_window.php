@@ -32,4 +32,3 @@ function cwSend(cid){
   .then(r=>r.json()).then(d=>{ if(d.ok){ inp.value=''; } });
 }
 </script>
-

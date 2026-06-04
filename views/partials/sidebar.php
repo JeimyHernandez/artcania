@@ -27,5 +27,3 @@
   <li><hr></li>
   <li><a href="<?=url('logout')?>" class="nav-link text-danger"><i class="fa fa-sign-out-alt me-2"></i>Salir</a></li>
 </ul>
-
-
