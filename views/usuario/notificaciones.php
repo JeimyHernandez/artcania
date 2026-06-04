@@ -40,4 +40,3 @@
   <p style="font-size:.85rem">Cuando haya actividad en tus obras o cuenta, aparecerá aquí</p>
 </div>
 <?php endif; ?>
-

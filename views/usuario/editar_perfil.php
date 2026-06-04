@@ -1,3 +1,4 @@
+<?php $pageTitle = 'Editar Perfil'; ?>
 <div class="row justify-content-center">
 <div class="col-lg-7">
   <h2 class="fs-5 font-cinzel mb-4" style="color:var(--gold-light)">✦ Editar Perfil</h2>
@@ -34,5 +35,3 @@
   </form>
 </div>
 </div>
-<?php $pageTitle = 'Editar Perfil'; ?>
-
