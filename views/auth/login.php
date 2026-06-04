@@ -11,7 +11,7 @@
   <!-- =========================================================
        Encabezado visual del formulario.
        Muestra el logo principal de Artcania junto al nombre
-       de la plataforma y el eslogan institucional.
+       de la plataforma y el eslogan para el proyecto <3.
   ========================================================= -->
   <div class="card-header-magic">
 
