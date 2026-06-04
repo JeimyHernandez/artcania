@@ -7,6 +7,7 @@ $cfg = artcania_config();
 ?><!DOCTYPE html>
 <html lang="es">
 <head>
+  
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title><?= isset($pageTitle) ? e($pageTitle).' – ' : '' ?>Artcania</title>
@@ -70,8 +71,8 @@ $cfg = artcania_config();
     /* ==========================================================
    Luna central decorativa.
    Se muestra detrás del formulario y por encima
-   del fondo cósmico animado.
-========================================================== */
+   del fondo cósmico animado para que se vea bonito.
+    ========================================================== */
 .moon-bg{
     position:fixed;
     top:50%;
@@ -91,6 +92,7 @@ $cfg = artcania_config();
     .w-100{position:relative;z-index:2}
   </style>
 </head>
+<!-- la musicaaaaa :D suena en bucle al terminar-->
 <audio id="bgMusic" loop>
     <source src="<?= asset('audio/hijo_de_la_luna.mp3') ?>" type="audio/mpeg">
 </audio>
@@ -162,6 +164,7 @@ $cfg = artcania_config();
 <script src="<?= asset('js/jquery.min.js') ?>"></script>
 <script src="<?= asset('js/bootstrap.bundle.min.js') ?>"></script>
 
+<!-- al hacer click suena la musica se coloco asi por que algunos navegadores bloquean la musica -->
 <script>
 document.addEventListener('click', function iniciarMusica() {
 
