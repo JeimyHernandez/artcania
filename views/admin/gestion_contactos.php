@@ -1,26 +1,11 @@
-<?php $pageTitle = 'Revisión de Contactos'; ?>
-<?php
-$contactos = Database::getInstance()->query(
-  'SELECT c.*,u.nombre as remitente,ua.nombre as artista_nombre FROM contactos_artista c JOIN usuarios u ON u.id=c.usuario_id JOIN usuarios ua ON ua.id=c.artista_id ORDER BY c.creado_en DESC LIMIT 100'
-)->fetchAll();
-?>
-<h2 class="fw-bold mb-4"><i class="fa fa-envelope me-2"></i>Contactos a Artistas</h2>
-<div class="card shadow">
-  <div class="card-body p-0 table-responsive">
-    <table class="table table-hover mb-0 tabla-dt">
-      <thead class="table-dark"><tr><th>#</th><th>Remitente</th><th>Artista</th><th>Asunto</th><th>Leído</th><th>Fecha</th></tr></thead>
-      <tbody>
-        <?php foreach($contactos as $c): ?>
-        <tr>
-          <td><?= $c['id'] ?></td>
-          <td><?= e($c['remitente']) ?></td>
-          <td><?= e($c['artista_nombre']) ?></td>
-          <td><?= e(truncate($c['asunto'],40)) ?></td>
-          <td><?= $c['leido']?'<i class="fa fa-check text-success"></i>':'<i class="fa fa-times text-danger"></i>' ?></td>
-          <td class="small"><?= format_date($c['creado_en']) ?></td>
-        </tr>
-        <?php endforeach; ?>
-      </tbody>
-    </table>
-  </div>
+<?php $pageTitle = 'Gestion Contactos'; ?>
+<div class="admin-page-header mb-4">
+  <h4 class="font-cinzel mb-0" style="color:var(--gold-light)"><i class="fa fa-gear me-2"></i><?php echo $pageTitle ?></h4>
+</div>
+<div class="card-magic p-4">
+  <p style="color:var(--pearl-muted);font-size:.875rem">
+    <i class="fa fa-circle-info me-2" style="color:var(--teal)"></i>
+    Esta sección carga datos del controlador. Los datos están disponibles en la variable <code>$<?php echo 'gestion_contactos' ?></code>.
+  </p>
+  <pre style="background:var(--bg);color:var(--pearl-muted);padding:1rem;border-radius:8px;font-size:.8rem;overflow:auto"><?php print_r($<?= 'gestion_contactos' ?> ?? []); ?></pre>
 </div>
