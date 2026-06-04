@@ -1,20 +1,30 @@
-<?php $pageTitle = 'Gestión de Artistas'; ?>
-<?php if(!isset($artistas)) $artistas = []; ?>
-<div class="d-flex justify-content-between align-items-center mb-4">
-  <h2 class="fw-bold"><i class="fa fa-palette me-2"></i>Gestión de Artistas</h2>
-  <span class="badge bg-secondary fs-6"><?= count($artistas) ?> artistas</span>
+<?php $pageTitle = 'Artistas'; if(!isset($artistas)) $artistas = []; ?>
+<div class="admin-page-header">
+  <h2><i class="fa fa-palette me-2"></i>Gestión de Artistas</h2>
+  <span class="badge-magic"><?= count($artistas) ?></span>
 </div>
-<div class="row g-4">
-  <?php foreach($artistas as $a): ?>
-  <div class="col-md-4 col-lg-3">
-    <div class="card shadow-sm text-center p-3 h-100">
-      <img src="<?= avatar($a['avatar']??'') ?>" class="rounded-circle mx-auto mb-2" width="70" height="70" style="object-fit:cover">
-      <h6 class="fw-bold mb-1"><?= e($a['nombre']) ?></h6>
-      <small class="text-muted"><?= e($a['email']) ?></small><br>
-      <span class="badge bg-<?= $a['verificado']?'success':'warning' ?> mt-1"><?= $a['verificado']?'Verificado':'Pendiente' ?></span>
-      <?php if($a['destacado']): ?><span class="badge bg-warning ms-1">⭐ Destacado</span><?php endif; ?>
-    </div>
+<div class="card-magic p-0 overflow-hidden">
+  <div class="p-3 border-bottom" style="border-color:var(--border)!important">
+    <input type="text" id="artSearch" class="form-control" placeholder="Buscar artista...">
   </div>
-  <?php endforeach; ?>
-  <?php if(empty($artistas)): ?><div class="col-12 text-center text-muted py-4">No hay artistas registrados.</div><?php endif; ?>
+  <div class="table-responsive">
+    <table class="table table-magic mb-0">
+      <thead><tr><th>Artista</th><th>Especialidad</th><th>País</th><th>Verificado</th><th>Destacado</th></tr></thead>
+      <tbody id="artTable">
+      <?php foreach($artistas as $a): ?>
+        <tr data-search="<?= strtolower(e($a['nombre'])) ?>">
+          <td><div class="d-flex align-items-center gap-2">
+            <img src="<?= avatar($a['avatar'] ?? '') ?>" class="rounded-circle" style="width:32px;height:32px;object-fit:cover;border:1px solid var(--border)" alt="">
+            <span style="color:var(--pearl);font-size:.875rem"><?= e($a['nombre']) ?></span>
+          </div></td>
+          <td style="font-size:.82rem"><?= e($a['especialidad'] ?? '-') ?></td>
+          <td style="font-size:.82rem"><?= e($a['pais'] ?? '-') ?></td>
+          <td><?php if(!empty($a['verificado'])): ?><i class="fa fa-circle-check" style="color:#4ade80"></i><?php else: ?><i class="fa fa-circle-xmark" style="color:#f87171"></i><?php endif; ?></td>
+          <td><?php if(!empty($a['destacado'])): ?><i class="fa fa-star" style="color:var(--gold-light)"></i><?php else: ?><span style="color:var(--pearl-muted)">—</span><?php endif; ?></td>
+        </tr>
+      <?php endforeach; ?>
+      </tbody>
+    </table>
+  </div>
 </div>
+<script>$('#artSearch').on('input',function(){var q=$(this).val().toLowerCase();$('#artTable tr').each(function(){$(this).toggle(!q||$(this).data('search').includes(q));});});</script>
