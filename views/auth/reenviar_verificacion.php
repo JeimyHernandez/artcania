@@ -1,82 +1,61 @@
 <?php $pageTitle = 'Reenviar verificación'; ?>
 
-<!DOCTYPE html>
-<html lang="es">
-
-<head>
-  <meta charset="UTF-8">
-  <title><?= $pageTitle ?></title>
-  <link rel="stylesheet" href="<?= asset('css/bootstrap.min.css') ?>">
-  <link rel="stylesheet" href="<?= asset('css/all.min.css') ?>">
-  <link rel="stylesheet" href="<?= asset('css/main.css') ?>">
-</head>
-
-<body>
-<div class="auth-shell anim-fade-up">
-  <div class="text-center mb-3">
-    <img src="<?= asset('img/logo.png') ?>"
-         alt="Artcania"
-         class="auth-logo-img">
-    <h1 class="auth-title" style="font-size:1.5rem">
-      VERIFICACIÓN
-    </h1>
-
-    <div class="auth-divider">
-      <span>✦</span>
-      <span>✧</span>
-      <span>✦</span>
-    </div>
-
-    <p class="auth-subtitle">
-      Reenviaremos tu correo
-      de verificación encantado
+<div class="card card-auth shadow-lg w-100">
+  <div class="card-header-magic text-center py-4">
+    <div class="auth-brand mb-2" style="font-size:2rem">🎨</div>
+    <h4 class="fw-bold mb-1" style="color:var(--pearl);font-size:1.2rem">Reenviar verificación</h4>
+    <p class="mb-0" style="color:rgba(244,247,251,.6);font-size:.85rem">
+      Te enviamos un nuevo enlace de activación
     </p>
   </div>
 
-  <form method="POST"
-        action="<?= url('reenviar-verificacion') ?>"
-        novalidate>
+  <div class="card-body p-4">
 
-    <?= csrf_field() ?>
-
-    <div class="mb-3">
-      <div class="input-group">
-        <span class="input-group-text">
-          <i class="fa fa-envelope"></i>
-        </span>
-
-        <input
-          type="email"
-          name="email"
-          class="form-control"
-          required
-          placeholder="tu@correo.com"
-        >
+    <?php if($flash_success): ?>
+      <div class="alert alert-success rounded-3 py-2 mb-3">
+        <i class="fa fa-check-circle me-2"></i><?= e($flash_success) ?>
       </div>
+    <?php endif; ?>
+    <?php if($flash_error): ?>
+      <div class="alert alert-danger rounded-3 py-2 mb-3">
+        <i class="fa fa-exclamation-circle me-2"></i><?= e($flash_error) ?>
+      </div>
+    <?php endif; ?>
+
+    <form method="POST" action="<?= url('reenviar-verificacion') ?>" novalidate>
+      <?= csrf_field() ?>
+      <div class="mb-3">
+        <label class="form-label fw-semibold" style="color:var(--pearl)">
+          Correo electrónico
+        </label>
+        <input type="email" name="email" class="form-control"
+               placeholder="tu@correo.com"
+               value="<?= old('email') ?>"
+               required autofocus>
+      </div>
+      <button type="submit" class="btn btn-magic w-100 py-2 fw-bold">
+        <i class="fa fa-paper-plane me-2"></i>Reenviar enlace
+      </button>
+    </form>
+
+    <hr style="border-color:rgba(255,255,255,.1);margin:1.2rem 0">
+
+    <div class="text-center" style="font-size:.88rem;color:rgba(244,247,251,.6)">
+      <a href="<?= url('login') ?>" style="color:var(--teal)">← Volver al login</a>
     </div>
 
-    <button type="submit"
-            class="btn btn-magic w-100 py-3">
-      <i class="fa fa-wand-magic-sparkles me-2"></i>
-      Reenviar verificación
-    </button>
-  </form>
-
-  <p class="text-center mt-3 mb-0"
-     style="font-size:.92rem">
-
-    <a href="<?= url('login') ?>"
-       style="color:var(--magenta);font-weight:600">
-
-      <i class="fa fa-arrow-left me-1"></i>
-      Volver al inicio de sesión
-    </a>
-  </p>
+  </div>
 </div>
 
-<script src="<?= asset('js/jquery-3.6.0.min.js') ?>"></script>
-<script src="<?= asset('js/popper.min.js') ?>"></script>
-<script src="<?= asset('js/bootstrap.min.js') ?>"></script>
-
-</body>
-</html>
+<!-- Nota informativa -->
+<div class="w-100 mt-3" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:1rem 1.2rem">
+  <p class="mb-2 fw-semibold" style="color:var(--gold);font-size:.88rem">
+    <i class="fa fa-lightbulb me-1"></i>Si el correo no llega:
+  </p>
+  <ul class="mb-0" style="color:rgba(244,247,251,.65);font-size:.83rem;padding-left:1.2rem">
+    <li>Revisa la carpeta <strong>Spam / No deseado</strong></li>
+    <li>Espera hasta 5 minutos</li>
+    <li>Asegúrate de que escribiste el correo correcto</li>
+    <li>Si el problema persiste, contacta al administrador</li>
+  </ul>
+</div>

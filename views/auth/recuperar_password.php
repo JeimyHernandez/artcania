@@ -1,76 +1,80 @@
 <?php $pageTitle = 'Recuperar contraseña'; ?>
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <title><?= $pageTitle ?></title>
-  <!-- Recursos locales del proyecto -->
-  <link rel="stylesheet" href="<?= asset('css/bootstrap.min.css') ?>">
-  <link rel="stylesheet" href="<?= asset('css/all.min.css') ?>">
-  <link rel="stylesheet" href="<?= asset('css/main.css') ?>">
-</head>
-<body>
-<div class="auth-card-wide" style="max-width:480px">
-  <div class="text-center mb-3">
-
-<!-- Logo nuevo de Artcania -->
-<img src="<?= asset('img/logo.png') ?>"
-     alt="Artcania"
-     class="auth-logo-img"
-     style="width:160px">
-<h1 style="font-family:'Cinzel',serif;color:var(--moon);font-size:1.6rem;letter-spacing:.25em;margin:.4rem 0 1.5rem">
-  ARTCANIA
-</h1>
-<h2 style="font-family:'Cinzel',serif;background:linear-gradient(180deg,#e9d8ff,#a766ff);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-size:2.2rem;letter-spacing:.05em">
-  Recuperar contraseña
-</h2>
-<div class="my-2" style="color:var(--gold)">
-  ✦ ◆ ✦
-</div>
-<p style="color:rgba(212,184,255,.8);font-family:'Cormorant Garamond',serif;font-size:1.1rem">
-  Ingresa tu correo electrónico y te enviaremos
-  un enlace mágico para restablecer tu contraseña.
-</p>
+<div class="card-auth">
+  <div class="card-header-magic">
+    <span class="auth-logo-gem">🔑</span>
+    <div class="auth-logo-text" style="font-size:1.4rem">ARTCANIA</div>
+    <div class="auth-tagline">Recupera el acceso a tu reino</div>
   </div>
+  <div class="card-body">
+    <?php $modo = isset($token) ? 'reset' : 'email'; ?>
 
-  <!-- Formulario para solicitar recuperación de contraseña -->
-  <form method="POST" action="<?= url('recuperar') ?>">
+    <?php if($modo === 'email'): ?>
+      <p style="font-size:.85rem;color:var(--pearl-muted);margin-bottom:1.5rem;text-align:center">
+        Ingresa tu correo y te enviaremos un enlace para restablecer tu contraseña.
+      </p>
+      <form method="POST" action="<?= url('recuperar') ?>">
+        <?= csrf_field() ?>
+        <div class="mb-4">
+          <div class="input-group">
+            <span class="input-group-text"><i class="fa fa-envelope"></i></span>
+            <input type="email" name="email" class="form-control"
+                   placeholder="tu@correo.com" value="<?= old('email') ?>" required autofocus>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-magic w-100 py-2">
+          <i class="fa fa-paper-plane me-2"></i>Enviar enlace
+        </button>
+      </form>
 
-<!-- Protección CSRF -->
-<?= csrf_field() ?>
-<div class="mb-4 position-relative">
-  <i class="fa fa-envelope position-absolute"
-     style="top:14px;left:16px;color:var(--lavender)">
-  </i>
+    <?php else: ?>
+      <p style="font-size:.85rem;color:var(--pearl-muted);margin-bottom:1.5rem;text-align:center">
+        Crea tu nueva contraseña mágica.
+      </p>
+      <form method="POST" action="<?= url('reset') ?>">
+        <?= csrf_field() ?>
+        <input type="hidden" name="token" value="<?= e($token) ?>">
+        <div class="mb-3">
+          <div class="input-group">
+            <span class="input-group-text"><i class="fa fa-lock"></i></span>
+            <input type="password" name="password" id="p1"
+                   class="form-control" placeholder="Nueva contraseña" required>
+            <button type="button" class="input-group-text toggle-pass" data-target="p1"
+                    style="cursor:pointer;border-radius:0 12px 12px 0;border-left:none">
+              <i class="fa fa-eye"></i>
+            </button>
+          </div>
+        </div>
+        <div class="mb-4">
+          <div class="input-group">
+            <span class="input-group-text"><i class="fa fa-lock"></i></span>
+            <input type="password" name="password_confirm" id="p2"
+                   class="form-control" placeholder="Confirmar contraseña" required>
+            <button type="button" class="input-group-text toggle-pass" data-target="p2"
+                    style="cursor:pointer;border-radius:0 12px 12px 0;border-left:none">
+              <i class="fa fa-eye"></i>
+            </button>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-magic w-100 py-2">
+          <i class="fa fa-key me-2"></i>Restablecer contraseña
+        </button>
+      </form>
+    <?php endif; ?>
 
-  <!-- Correo donde se enviará el enlace de recuperación -->
-  <input
-    name="email"
-    type="email"
-    required
-    class="input-magic"
-    placeholder="Tu correo electrónico"
-    style="padding-left:46px;padding:.9rem 1rem .9rem 46px"
-  >
-</div>
-<button class="btn-magic btn-magic-solid w-100"
-        style="padding:1rem;font-size:1.15rem;font-family:'Cinzel',serif">
-  Enviar enlace mágico ✦
-</button>
-  </form>
-  <div class="text-center mt-4">
-
-<!-- Regresar al formulario de inicio de sesión -->
-<a href="<?= url('login') ?>"
-   style="color:var(--magenta);font-family:'Cormorant Garamond',serif;font-size:1.05rem">
-  ← Volver al inicio de sesión
-</a>
+    <div class="text-center mt-3">
+      <a href="<?= url('login') ?>" style="color:var(--purple-mid);font-size:.83rem;text-decoration:none">
+        ← Volver al inicio de sesión
+      </a>
+    </div>
   </div>
 </div>
-
-<!-- Librerías JavaScript locales -->
-<script src="<?= asset('js/jquery-3.6.0.min.js') ?>"></script>
-<script src="<?= asset('js/popper.min.js') ?>"></script>
-<script src="<?= asset('js/bootstrap.min.js') ?>"></script>
-</body>
-</html>
+<script>
+document.querySelectorAll('.toggle-pass').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    var inp = document.getElementById(this.dataset.target);
+    var ico = this.querySelector('i');
+    inp.type = inp.type === 'password' ? 'text' : 'password';
+    ico.classList.toggle('fa-eye'); ico.classList.toggle('fa-eye-slash');
+  });
+});
+</script>

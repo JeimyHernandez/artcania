@@ -25,7 +25,7 @@ $cfg = artcania_config();
       overflow:hidden; position:relative;
     }
     /* Canvas estrellas */
-    #cosmic-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;}
+    #cosmic-canvas{position:fixed;inset:0;z-index:1;pointer-events:none;}
     /* Nebulosa animada */
     .nebula{position:fixed;border-radius:50%;filter:blur(80px);pointer-events:none;z-index:0;mix-blend-mode:screen;opacity:.55;animation:nebulaDrift 22s ease-in-out infinite alternate}
     .nebula.n1{top:-10%;left:-5%;width:520px;height:520px;background:radial-gradient(circle,#7c3aed,transparent 70%);}
@@ -66,12 +66,46 @@ $cfg = artcania_config();
       90%{opacity:1}
       100%{transform:translate(120vw,120vh);opacity:0}
     }
+
+    /* ==========================================================
+   Luna central decorativa.
+   Se muestra detrás del formulario y por encima
+   del fondo cósmico animado.
+========================================================== */
+.moon-bg{
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+
+    width:1300px;
+    max-width:none;
+
+    opacity:.95;
+
+    z-index:1;
+
+    pointer-events:none;
+}
     /* Asegurar el contenido por encima */
     .w-100{position:relative;z-index:2}
   </style>
 </head>
+<audio id="bgMusic" loop>
+    <source src="<?= asset('audio/hijo_de_la_luna.mp3') ?>" type="audio/mpeg">
+</audio>
 <body>
 
+<!-- =========================================================
+     Luna decorativa de fondo.
+     Se coloca detrás del formulario principal y encima
+     del cielo cósmico para dar profundidad visual.
+========================================================= -->
+<img
+    src="<?= asset('img/luna_plata.png') ?>"
+    alt="Luna"
+    class="moon-bg"
+>
 <!-- Fondo cósmico -->
 <canvas id="cosmic-canvas"></canvas>
 <div class="nebula n1"></div>
@@ -91,7 +125,8 @@ $cfg = artcania_config();
   <div style="position:absolute;bottom:15%;right:10%;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(201,162,39,.12),transparent 70%);filter:blur(35px)"></div>
 </div>
 
-<div class="w-100" style="max-width:440px;position:relative;z-index:1">
+
+<div class="w-100" style="max-width:440px;position:relative;z-index:2">
 
   <!-- Flash messages -->
   <?php if($flash_success): ?>
@@ -114,7 +149,7 @@ $cfg = artcania_config();
   <?php if(!empty($flash_errors)): ?>
     <div class="alert-danger-magic mb-3">
       <ul class="mb-0 ps-3" style="font-size:.85rem">
-        <?php foreach((array)$flash_errors as $e): ?><li><?= htmlspecialchars($e) ?></li><?php endforeach; ?>
+        <?php foreach((array)$flash_errors as $field => $msgs): foreach((array)$msgs as $e): ?><li><?= htmlspecialchars((string)$e) ?></li><?php endforeach; endforeach; ?>
       </ul>
     </div>
   <?php endif; ?>
@@ -124,10 +159,27 @@ $cfg = artcania_config();
 </div>
 
 <script>var BASE_URL = <?= json_encode(rtrim($cfg['url'], '/')) ?>;</script>
-<script src="<?= asset('js/bootstrap.bundle.min.js') ?>"></script>
 <script src="<?= asset('js/jquery.min.js') ?>"></script>
+<script src="<?= asset('js/bootstrap.bundle.min.js') ?>"></script>
+
+<script>
+document.addEventListener('click', function iniciarMusica() {
+
+    const music = document.getElementById('bgMusic');
+
+    music.play().catch(function(){});
+
+    document.removeEventListener(
+        'click',
+        iniciarMusica
+    );
+
+});
+</script>
+
 <script>
 (function(){
+  
   // Twinkle stars (DOM)
   var layer = document.getElementById('twinkle-layer');
   for(var i=0;i<60;i++){
@@ -179,6 +231,7 @@ $cfg = artcania_config();
   }
   tick();
 })();
+
 </script>
 </body>
 </html>
