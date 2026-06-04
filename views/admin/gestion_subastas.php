@@ -3,6 +3,7 @@
   <h2><i class="fa fa-gavel me-2"></i>Gestión de Subastas</h2>
   <span class="badge-magic"><?= count($subastas) ?></span>
 </div>
+
 <div class="card-magic p-0 overflow-hidden">
   <div class="table-responsive">
     <table class="table table-magic mb-0">
@@ -15,6 +16,7 @@
         $ec=['activa'=>'badge-teal','programada'=>'badge-warning','finalizada'=>'badge-magic','cancelada'=>'badge-danger'];
         $e=$ec[$s['estado']]??' badge-magic';
       ?>
+      
         <tr>
           <td style="color:var(--pearl);font-size:.83rem"><?= e(truncate($s['titulo'] ?? '',30)) ?></td>
           <td><span class="<?= $e ?>" style="font-size:.7rem"><?= ucfirst($s['estado']) ?></span></td>

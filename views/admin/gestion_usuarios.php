@@ -135,7 +135,7 @@ window.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  // ── Cambiar rol ─────────────────────────────────────────────────────────────
+  // ── opcionde cambiar el rol ─────────────────────────────────────────────────────────────
   document.addEventListener('click', function(e) {
     var btn = e.target.closest('.btn-cambiar-rol-usuario');
     if (!btn) return;

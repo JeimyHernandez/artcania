@@ -3,6 +3,7 @@
   <h2><i class="fa fa-images me-2"></i>Gestión de Obras</h2>
   <span class="badge-magic"><?= count($obras) ?></span>
 </div>
+
 <div class="card-magic p-0 overflow-hidden">
   <div class="table-responsive">
     <table class="table table-magic mb-0">
@@ -12,6 +13,7 @@
         $ec=['aprobada'=>'badge-teal','pendiente'=>'badge-warning','rechazada'=>'badge-danger'];
         $e=$ec[$o['estado']]??' badge-magic';
       ?>
+      
         <tr>
           <td><div class="d-flex align-items-center gap-2">
             <?php if(!empty($o['imagen_principal'])): ?>
