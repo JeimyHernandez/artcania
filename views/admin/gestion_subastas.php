@@ -1,27 +1,29 @@
-<?php $pageTitle = 'Gestión de Subastas'; ?>
-<?php if(!isset($subastas)) $subastas = []; ?>
-<div class="d-flex justify-content-between align-items-center mb-4">
-  <h2 class="fw-bold"><i class="fa fa-gavel me-2"></i>Gestión de Subastas</h2>
+<?php $pageTitle = 'Subastas'; if(!isset($subastas)) $subastas = []; ?>
+<div class="admin-page-header">
+  <h2><i class="fa fa-gavel me-2"></i>Gestión de Subastas</h2>
+  <span class="badge-magic"><?= count($subastas) ?></span>
 </div>
-<div class="card shadow">
-  <div class="card-body p-0 table-responsive">
-    <table class="table table-hover mb-0 tabla-dt">
-      <thead class="table-dark"><tr>
-        <th>#</th><th>Obra ID</th><th>Precio Inicial</th><th>Precio Actual</th><th>Fecha Fin</th><th>Estado</th><th>Pujas</th>
-      </tr></thead>
+<div class="card-magic p-0 overflow-hidden">
+  <div class="table-responsive">
+    <table class="table table-magic mb-0">
+      <thead><tr><th>Obra</th><th>Estado</th><th>P. Inicial</th><th>P. Actual</th><th>Pujas</th><th>Cierre</th></tr></thead>
       <tbody>
-        <?php foreach($subastas as $s): ?>
-        <?php $stmt = Database::getInstance()->prepare('SELECT COUNT(*) FROM pujas WHERE subasta_id=?'); $stmt->execute([$s['id']]); $npujas = (int)$stmt->fetchColumn(); ?>
+      <?php foreach($subastas as $s):
+        $stmt = Database::getInstance()->prepare('SELECT COUNT(*) FROM pujas WHERE subasta_id=:id');
+        $stmt->execute([':id'=>$s['id']]);
+        $npujas = (int)$stmt->fetchColumn();
+        $ec=['activa'=>'badge-teal','programada'=>'badge-warning','finalizada'=>'badge-magic','cancelada'=>'badge-danger'];
+        $e=$ec[$s['estado']]??' badge-magic';
+      ?>
         <tr>
-          <td><?= $s['id'] ?></td>
-          <td><?= $s['obra_id'] ?></td>
-          <td><?= money($s['precio_inicial']) ?></td>
-          <td class="fw-bold text-success"><?= money($s['precio_actual']) ?></td>
-          <td><?= format_date($s['fecha_fin']) ?></td>
-          <td><span class="badge bg-<?= $s['estado']==='activa'?'success':($s['estado']==='programada'?'warning':'secondary') ?>"><?= e($s['estado']) ?></span></td>
-          <td><?= $npujas ?></td>
+          <td style="color:var(--pearl);font-size:.83rem"><?= e(truncate($s['titulo'] ?? '',30)) ?></td>
+          <td><span class="<?= $e ?>" style="font-size:.7rem"><?= ucfirst($s['estado']) ?></span></td>
+          <td style="font-size:.82rem">$<?= number_format($s['precio_inicial'] ?? 0,0) ?></td>
+          <td style="font-size:.82rem;color:var(--gold-light)">$<?= number_format($s['precio_actual'] ?? 0,0) ?></td>
+          <td style="font-size:.82rem"><?= $npujas ?></td>
+          <td style="font-size:.75rem"><?= format_date($s['fecha_fin']) ?></td>
         </tr>
-        <?php endforeach; ?>
+      <?php endforeach; ?>
       </tbody>
     </table>
   </div>
