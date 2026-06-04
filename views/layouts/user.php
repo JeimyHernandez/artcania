@@ -12,6 +12,7 @@ $page = $base ? ltrim(substr($uri, strlen($base)), '/') : $uri;
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="csrf" content="<?= htmlspecialchars($csrf_token ?? '', ENT_QUOTES) ?>">
   <title><?= isset($pageTitle) ? e($pageTitle).' – ' : '' ?>Artcania</title>
   <link rel="stylesheet" href="<?= asset('css/bootstrap.min.css') ?>">
   <link rel="stylesheet" href="<?= asset('css/fontawesome.min.css') ?>">
@@ -91,10 +92,8 @@ $page = $base ? ltrim(substr($uri, strlen($base)), '/') : $uri;
 <main class="container-xl py-4"><?= $content ?></main>
 
 <script>var BASE_URL = <?= json_encode(rtrim($cfg['url'], '/')) ?>;</script>
-<script src="<?= asset('js/bootstrap.bundle.min.js') ?>"></script>
 <script src="<?= asset('js/jquery.min.js') ?>"></script>
+<script src="<?= asset('js/bootstrap.bundle.min.js') ?>"></script>
 <script src="<?= asset('js/main.js') ?>"></script>
 </body>
 </html>
-
-

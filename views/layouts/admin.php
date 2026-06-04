@@ -14,6 +14,7 @@ $page = $base ? ltrim(substr($uri, strlen($base)), '/') : $uri;
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="csrf" content="<?= htmlspecialchars($csrf_token ?? '', ENT_QUOTES) ?>">
   <title><?= isset($pageTitle) ? e($pageTitle).' – ' : '' ?>Admin · Artcania</title>
   <link rel="stylesheet" href="<?= asset('css/bootstrap.min.css') ?>">
   <link rel="stylesheet" href="<?= asset('css/fontawesome.min.css') ?>">
@@ -83,7 +84,7 @@ $page = $base ? ltrim(substr($uri, strlen($base)), '/') : $uri;
     <a href="<?= url('admin/gestion-obras') ?>" class="sidebar-nav-item <?= strpos($page,'admin/gestion-obras')===0?'active':'' ?>">
       <i class="fa fa-image"></i> Obras
     </a>
-    <a href="<?= url('admin/gestion-subastas') ?>" class="sidebar-nav-item <?= strpos($page,'admin/gestion-subastas')===0?'active':'' ?>">
+    <a href="<?= url('panel/subastas') ?>" class="sidebar-nav-item <?= (strpos($page,'panel/subastas')===0||strpos($page,'admin/gestion-subastas')===0||strpos($page,'admin/subastas')===0)?'active':'' ?>">
       <i class="fa fa-gavel"></i> Subastas
     </a>
     <a href="<?= url('admin/gestion-fanarts') ?>" class="sidebar-nav-item <?= strpos($page,'admin/gestion-fanarts')===0?'active':'' ?>">
@@ -92,7 +93,9 @@ $page = $base ? ltrim(substr($uri, strlen($base)), '/') : $uri;
     <a href="<?= url('admin/gestion-exposiciones') ?>" class="sidebar-nav-item <?= strpos($page,'admin/gestion-exposiciones')===0?'active':'' ?>">
       <i class="fa fa-landmark"></i> Exposiciones
     </a>
-
+    <a href="<?= url('panel/exposiciones') ?>" class="sidebar-nav-item <?= strpos($page,'panel/exposiciones')===0?'active':'' ?>">
+      <i class="fa fa-landmark"></i> Panel Exposiciones
+    </a>
     <div class="sidebar-section-label">Sistema</div>
     <a href="<?= url('admin/bitacora') ?>" class="sidebar-nav-item <?= strpos($page,'admin/bitacora')===0?'active':'' ?>">
       <i class="fa fa-scroll"></i> Logs

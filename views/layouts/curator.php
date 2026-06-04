@@ -14,10 +14,12 @@ $page = $base ? ltrim(substr($uri, strlen($base)), '/') : $uri;
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="csrf" content="<?= htmlspecialchars($csrf_token ?? '', ENT_QUOTES) ?>">
   <title><?= isset($pageTitle) ? e($pageTitle).' – ' : '' ?>Curador · Artcania</title>
   <link rel="stylesheet" href="<?= asset('css/bootstrap.min.css') ?>">
   <link rel="stylesheet" href="<?= asset('css/fontawesome.min.css') ?>">
   <link rel="stylesheet" href="<?= asset('css/main.css') ?>">
+  <link rel="stylesheet" href="<?= asset('css/sweetalert2.min.css') ?>">
   <link rel="stylesheet" href="<?= asset('css/curador.css') ?>">
 </head>
 <body>
@@ -32,36 +34,42 @@ $page = $base ? ltrim(substr($uri, strlen($base)), '/') : $uri;
     <a href="<?= url('curador/dashboard') ?>" class="sidebar-nav-item <?= $page==='curador/dashboard'?'active':'' ?>">
       <i class="fa fa-chart-pie"></i> Dashboard
     </a>
-    <a href="<?= url('curador/obras-pendientes') ?>" class="sidebar-nav-item <?= strpos(\$page,'curador/obras-pendientes')===0?'active':'' ?>">
+    <a href="<?= url('curador/obras-pendientes') ?>" class="sidebar-nav-item <?= strpos($page,'curador/obras-pendientes')===0?'active':'' ?>">
       <i class="fa fa-hourglass-half"></i> Obras Pendientes
     </a>
-    <a href="<?= url('curador/validar') ?>" class="sidebar-nav-item <?= strpos(\$page,'curador/validar')===0?'active':'' ?>">
+    <a href="<?= url('curador/obras-pendientes') ?>" class="sidebar-nav-item <?= strpos($page,'curador/obras-pendientes')===0?'active':'' ?>">
       <i class="fa fa-circle-check"></i> Validar Obra
     </a>
-    <a href="<?= url('curador/historial') ?>" class="sidebar-nav-item <?= strpos(\$page,'curador/historial')===0?'active':'' ?>">
+    <a href="<?= url('curador/historial') ?>" class="sidebar-nav-item <?= strpos($page,'curador/historial')===0?'active':'' ?>">
       <i class="fa fa-clock-rotate-left"></i> Historial
     </a>
-    <a href="<?= url('curador/destacados') ?>" class="sidebar-nav-item <?= strpos(\$page,'curador/destacados')===0?'active':'' ?>">
+    <a href="<?= url('curador/destacados') ?>" class="sidebar-nav-item <?= strpos($page,'curador/destacados')===0?'active':'' ?>">
       <i class="fa fa-star"></i> Destacados
     </a>
-    <a href="<?= url('curador/exposiciones') ?>" class="sidebar-nav-item <?= strpos(\$page,'curador/exposiciones')===0?'active':'' ?>">
+    <a href="<?= url('panel/subastas') ?>" class="sidebar-nav-item <?= strpos($page,'panel/subastas')===0?'active':'' ?>">
+      <i class="fa fa-gavel"></i> Subastas
+    </a>
+    <a href="<?= url('panel/exposiciones') ?>" class="sidebar-nav-item <?= strpos($page,'panel/exposiciones')===0?'active':'' ?>">
       <i class="fa fa-landmark"></i> Exposiciones
     </a>
-    <a href="<?= url('curador/moderar-comentarios') ?>" class="sidebar-nav-item <?= strpos(\$page,'curador/moderar')===0?'active':'' ?>">
+    <a href="<?= url('curador/exposiciones') ?>" class="sidebar-nav-item <?= strpos($page,'curador/exposiciones')===0?'active':'' ?>">
+      <i class="fa fa-landmark"></i> Exposiciones
+    </a>
+    <a href="<?= url('curador/moderar-comentarios') ?>" class="sidebar-nav-item <?= strpos($page,'curador/moderar')===0?'active':'' ?>">
       <i class="fa fa-comments"></i> Comentarios
     </a>
-    <a href="<?= url('curador/reportes') ?>" class="sidebar-nav-item <?= strpos(\$page,'curador/reportes')===0?'active':'' ?>">
+    <a href="<?= url('curador/reportes') ?>" class="sidebar-nav-item <?= strpos($page,'curador/reportes')===0?'active':'' ?>">
       <i class="fa fa-flag"></i> Reportes
     </a>
-    <a href="<?= url('curador/metricas') ?>" class="sidebar-nav-item <?= strpos(\$page,'curador/metricas')===0?'active':'' ?>">
+    <a href="<?= url('curador/metricas') ?>" class="sidebar-nav-item <?= strpos($page,'curador/metricas')===0?'active':'' ?>">
       <i class="fa fa-chart-bar"></i> Métricas
     </a>
 
     <div class="sidebar-section-label">Mi cuenta</div>
-    <a href="<?= url('perfil') ?>" class="sidebar-nav-item <?= strpos(\$page,'perfil')===0?'active':'' ?>">
+    <a href="<?= url('perfil') ?>" class="sidebar-nav-item <?= strpos($page,'perfil')===0?'active':'' ?>">
       <i class="fa fa-user"></i> Mi Perfil
     </a>
-    <a href="<?= url('notificaciones') ?>" class="sidebar-nav-item <?= strpos(\$page,'notificaciones')===0?'active':'' ?>">
+    <a href="<?= url('notificaciones') ?>" class="sidebar-nav-item <?= strpos($page,'notificaciones')===0?'active':'' ?>">
       <i class="fa fa-bell"></i> Notificaciones
     </a>
   </nav>
@@ -110,13 +118,24 @@ $page = $base ? ltrim(substr($uri, strlen($base)), '/') : $uri;
      style="display:none!important;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:1019"></div>
 
 <script>var BASE_URL = <?= json_encode(rtrim($cfg['url'], '/')) ?>;</script>
-<script src="<?= asset('js/bootstrap.bundle.min.js') ?>"></script>
 <script src="<?= asset('js/jquery.min.js') ?>"></script>
+<script src="<?= asset('js/bootstrap.bundle.min.js') ?>"></script>
+<script src="<?= asset('js/sweetalert2.min.js') ?>"></script>
 <script src="<?= asset('js/main.js') ?>"></script>
 <script>
 $('#sidebarToggle').on('click',function(){ $('#sidebar').toggleClass('show'); $('#sidebarOverlay').toggle(); });
 $('#sidebarOverlay').on('click',function(){ $('#sidebar').removeClass('show'); $(this).hide(); });
 </script>
+
+<script>
+<?php if($flash_success): ?>
+Swal.fire({ toast:true, position:'top-end', icon:'success', title:<?= json_encode($flash_success) ?>,
+  showConfirmButton:false, timer:3000, timerProgressBar:true });
+<?php endif; ?>
+<?php if($flash_error): ?>
+Swal.fire({ toast:true, position:'top-end', icon:'error', title:<?= json_encode($flash_error) ?>,
+  showConfirmButton:false, timer:4000, timerProgressBar:true });
+<?php endif; ?>
+</script>
 </body>
 </html>
-

@@ -14,6 +14,7 @@ $page = $base ? ltrim(substr($uri, strlen($base)), '/') : $uri;
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="csrf" content="<?= htmlspecialchars($csrf_token ?? '', ENT_QUOTES) ?>">
   <title><?= isset($pageTitle) ? e($pageTitle).' – ' : '' ?>Artista · Artcania</title>
   <link rel="stylesheet" href="<?= asset('css/bootstrap.min.css') ?>">
   <link rel="stylesheet" href="<?= asset('css/fontawesome.min.css') ?>">
@@ -32,39 +33,42 @@ $page = $base ? ltrim(substr($uri, strlen($base)), '/') : $uri;
     <a href="<?= url('artista/dashboard') ?>" class="sidebar-nav-item <?= $page==='artista/dashboard'?'active':'' ?>">
       <i class="fa fa-house"></i> Dashboard
     </a>
-    <a href="<?= url('artista/obras') ?>" class="sidebar-nav-item <?= strpos(\$page,'artista/obras')===0?'active':'' ?>">
+    <a href="<?= url('artista/obras') ?>" class="sidebar-nav-item <?= strpos($page,'artista/obras')===0?'active':'' ?>">
       <i class="fa fa-images"></i> Mis Obras
     </a>
     <a href="<?= url('artista/subir') ?>" class="sidebar-nav-item <?= $page==='artista/subir'?'active':'' ?>">
       <i class="fa fa-cloud-arrow-up"></i> Subir Obra
     </a>
-    <a href="<?= url('artista/metricas') ?>" class="sidebar-nav-item <?= strpos(\$page,'artista/metricas')===0?'active':'' ?>">
+    <a href="<?= url('artista/metricas') ?>" class="sidebar-nav-item <?= strpos($page,'artista/metricas')===0?'active':'' ?>">
       <i class="fa fa-chart-line"></i> Métricas
     </a>
-    <a href="<?= url('artista/fanarts') ?>" class="sidebar-nav-item <?= strpos(\$page,'artista/fanarts')===0?'active':'' ?>">
+    <a href="<?= url('artista/fanarts') ?>" class="sidebar-nav-item <?= strpos($page,'artista/fanarts')===0?'active':'' ?>">
       <i class="fa fa-star"></i> FanArts
     </a>
-    <a href="<?= url('artista/colaboraciones') ?>" class="sidebar-nav-item <?= strpos(\$page,'artista/colaboraciones')===0?'active':'' ?>">
+    <a href="<?= url('artista/colaboraciones') ?>" class="sidebar-nav-item <?= strpos($page,'artista/colaboraciones')===0?'active':'' ?>">
       <i class="fa fa-handshake"></i> Colaboraciones
     </a>
-    <a href="<?= url('chat') ?>" class="sidebar-nav-item <?= strpos(\$page,'chat')===0?'active':'' ?>">
+    <a href="<?= url('artista/subastas') ?>" class="sidebar-nav-item <?= strpos($page,'artista/subastas')===0?'active':'' ?>">
+      <i class="fa fa-gavel"></i> Subastas
+    </a>
+    <a href="<?= url('chat') ?>" class="sidebar-nav-item <?= strpos($page,'chat')===0?'active':'' ?>">
       <i class="fa fa-comments"></i> Chat
     </a>
-    <a href="<?= url('artista/estadisticas') ?>" class="sidebar-nav-item <?= strpos(\$page,'artista/estadisticas')===0?'active':'' ?>">
+    <a href="<?= url('artista/estadisticas') ?>" class="sidebar-nav-item <?= strpos($page,'artista/estadisticas')===0?'active':'' ?>">
       <i class="fa fa-chart-bar"></i> Estadísticas
     </a>
-    <a href="<?= url('artista/editar-perfil') ?>" class="sidebar-nav-item <?= strpos(\$page,'artista/editar')===0?'active':'' ?>">
+    <a href="<?= url('artista/editar-perfil') ?>" class="sidebar-nav-item <?= strpos($page,'artista/editar')===0?'active':'' ?>">
       <i class="fa fa-user-pen"></i> Mi Perfil
     </a>
-    <a href="<?= url('artista/contactos') ?>" class="sidebar-nav-item <?= strpos(\$page,'artista/contactos')===0?'active':'' ?>">
+    <a href="<?= url('artista/contactos') ?>" class="sidebar-nav-item <?= strpos($page,'artista/contactos')===0?'active':'' ?>">
       <i class="fa fa-envelope"></i> Contactos
     </a>
 
     <div class="sidebar-section-label">Mi cuenta</div>
-    <a href="<?= url('perfil') ?>" class="sidebar-nav-item <?= strpos(\$page,'perfil')===0?'active':'' ?>">
+    <a href="<?= url('perfil') ?>" class="sidebar-nav-item <?= strpos($page,'perfil')===0?'active':'' ?>">
       <i class="fa fa-user"></i> Mi Perfil
     </a>
-    <a href="<?= url('notificaciones') ?>" class="sidebar-nav-item <?= strpos(\$page,'notificaciones')===0?'active':'' ?>">
+    <a href="<?= url('notificaciones') ?>" class="sidebar-nav-item <?= strpos($page,'notificaciones')===0?'active':'' ?>">
       <i class="fa fa-bell"></i> Notificaciones
     </a>
   </nav>
@@ -116,8 +120,8 @@ $page = $base ? ltrim(substr($uri, strlen($base)), '/') : $uri;
      style="display:none!important;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:1019"></div>
 
 <script>var BASE_URL = <?= json_encode(rtrim($cfg['url'], '/')) ?>;</script>
-<script src="<?= asset('js/bootstrap.bundle.min.js') ?>"></script>
 <script src="<?= asset('js/jquery.min.js') ?>"></script>
+<script src="<?= asset('js/bootstrap.bundle.min.js') ?>"></script>
 <script src="<?= asset('js/main.js') ?>"></script>
 <script>
 $('#sidebarToggle').on('click',function(){ $('#sidebar').toggleClass('show'); $('#sidebarOverlay').toggle(); });

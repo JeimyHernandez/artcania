@@ -12,6 +12,7 @@ $currentPage = $basePath ? ltrim(substr($currentUri, strlen($basePath)), '/') : 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="csrf" content="<?= htmlspecialchars($csrf_token ?? '', ENT_QUOTES) ?>">
   <title><?= isset($pageTitle) ? e($pageTitle).' – ' : '' ?>Artcania</title>
   <link rel="icon" href="<?= asset('img/favicon.svg') ?>" type="image/svg+xml">
   <link rel="stylesheet" href="<?= asset('css/bootstrap.min.css') ?>">
