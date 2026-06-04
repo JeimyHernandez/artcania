@@ -1,5 +1,6 @@
 <?php $pageTitle = 'Reenviar verificación'; ?>
 
+<!--cambios visuales para que concuerde con el estilo nuevo-->
 <div class="card card-auth shadow-lg w-100">
   <div class="card-header-magic text-center py-4">
     <div class="auth-brand mb-2" style="font-size:2rem">🎨</div>
