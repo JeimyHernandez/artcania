@@ -20,6 +20,7 @@
           <th>Estado</th>
         </tr>
       </thead>
+
       <tbody>
         <?php foreach($curadores as $c): ?>
         <tr style="border-bottom:1px solid var(--border)">
